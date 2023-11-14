@@ -11,7 +11,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends nodejs yarn
 ENV INSTALL_PATH /opt/app
 RUN mkdir -p $INSTALL_PATH
 
-# Install gems 17 - rimuove la cartella node modules e vendor perchè sono cartelle enormi che non metti all'interno dell'immagine
+# Install gems 17 - rimuove la cartella node modules e vendor perchè sono cartelle enormi che non vengono messe all'interno dell'immagine
 WORKDIR $INSTALL_PATH
 COPY ProjectManagementApp/ .
 RUN rm -rf node_modules vendor
@@ -19,7 +19,9 @@ RUN gem install rails bundler
 RUN bundle install
 RUN yarn install
 
+#RUN cd ProjectManagementApp
+
 EXPOSE 3000
 
 # Start server
-CMD rails server
+CMD ["rails", "server", "-b", "0.0.0.0"]
