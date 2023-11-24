@@ -1,7 +1,18 @@
 Rails.application.routes.draw do
+
+  resources :projects
+  resources :tasks
+  #Tasks
+  #get 'tasks/index', to: "task#index"
+  #get 'tasks/:id', to: "task#show"
+
+  #Projects
+  #get '/projects/index', to: "projects#index"
+  #get '/projects/new', to: "projects#new"
+  #get '/projects/:id', to: "projects#show"
+
   devise_for :users
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
-  #GET /home
+
   get "home", to: "home#index"
 
   get "/", to: "main#index"

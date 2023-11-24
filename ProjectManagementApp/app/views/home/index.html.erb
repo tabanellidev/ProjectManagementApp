@@ -2,6 +2,8 @@
 
 <% if current_user %>
     <p> Hello <%= current_user.email %>| </p>
+    <p> Name [<%= current_user.name %>] </p>
+    <p> Surname [<%= current_user.surname %>] </p>
     <p> You are a [<%= current_user.role %>] </p>
     <p>
         You have successfully authenticated with your Devise account.
