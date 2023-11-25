@@ -4,7 +4,9 @@
 <ul>
   <% @projects.each do |project| %>
     <li>
-      <%= project.title %>
+      <%= project.title %> <%= button_to "Info", {action: "show", id: project.id}, method: :get %>
     </li>
   <% end %>
 </ul>
+
+<%= button_to "Crea Progetto", new_project_path, method: :get  %>

@@ -4,7 +4,7 @@
 <ul>
   <% @tasks.each do |task| %>
     <li>
-      <%= task.title %>
+      <%= task.title %> <%= button_to "Info", {action: "show", id: task.id}, method: :get %>
     </li>
   <% end %>
 </ul>

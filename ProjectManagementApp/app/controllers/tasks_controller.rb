@@ -13,7 +13,10 @@ class TasksController < ApplicationController
   end
 
   def create
+    puts task_params
     @task = Task.new(task_params)
+
+
 
     if @task.save
       redirect_to @task
@@ -25,7 +28,7 @@ class TasksController < ApplicationController
 
   private
     def task_params
-      params.require(:task).permit(:title, :description)
-  end
+      params.require(:task).permit(:title, :description, :project_id)
+    end
 
 end

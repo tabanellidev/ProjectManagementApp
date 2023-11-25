@@ -4,9 +4,11 @@ class CreateTasks < ActiveRecord::Migration[7.0]
 
       t.string :title
       t.string :description
-      t.belongs_to :project
 
       t.timestamps
     end
+
+    add_reference :tasks, :project, column: "project_id", foreign_key: true
+
   end
 end

@@ -21,9 +21,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_24_134130) do
   create_table "tasks", force: :cascade do |t|
     t.string "title"
     t.string "description"
-    t.integer "project_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "project_id"
     t.index ["project_id"], name: "index_tasks_on_project_id"
   end
 
@@ -42,4 +42,5 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_24_134130) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "tasks", "projects"
 end

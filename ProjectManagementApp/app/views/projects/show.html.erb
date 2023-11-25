@@ -1,1 +1,13 @@
 Progetto: <h1><%= @project.title %></h1>
+
+Task associati:
+<ul>
+  <% @project.tasks.each do |task| %>
+    <li>
+      <%= task.title %> <%= button_to "Info", task_path, method: :get%>
+    </li>
+  <% end %>
+
+</ul>
+
+<%= button_to "Crea Task", new_task_path, params:{project_id: @project.id} , method: :get  %>
