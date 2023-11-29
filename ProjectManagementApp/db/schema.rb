@@ -10,7 +10,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_11_24_134130) do
+ActiveRecord::Schema[7.0].define(version: 2023_11_29_133132) do
+  create_table "assignments", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.integer "task_id", null: false
+    t.string "title"
+    t.string "description"
+    t.integer "completed", default: 0
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["task_id"], name: "index_assignments_on_task_id"
+    t.index ["user_id"], name: "index_assignments_on_user_id"
+  end
+
   create_table "projects", force: :cascade do |t|
     t.string "title"
     t.string "description"
@@ -21,6 +33,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_24_134130) do
   create_table "tasks", force: :cascade do |t|
     t.string "title"
     t.string "description"
+    t.integer "completed", default: 0
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "project_id"
@@ -42,5 +55,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_24_134130) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "assignments", "tasks"
+  add_foreign_key "assignments", "users"
   add_foreign_key "tasks", "projects"
 end

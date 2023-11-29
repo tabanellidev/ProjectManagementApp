@@ -1,0 +1,10 @@
+<h1>Assignment#index</h1>
+<p>Find me in app/views/users/index.html.erb</p>
+
+<ul>
+  <% @assignments.each do |assignment| %>
+    <li>
+      User_id: <%= assignment.user_id %>  Task_id: <%= assignment.task_id %> <%= button_to "Info", {action: "show", id: assignment.id}, method: :get %>
+    </li>
+  <% end %>
+</ul>

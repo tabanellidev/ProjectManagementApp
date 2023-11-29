@@ -5,4 +5,8 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
 
   enum role: [:developer, :admin]
+
+  has_many :assignments
+  has_many :tasks, through: :assignments
+
 end

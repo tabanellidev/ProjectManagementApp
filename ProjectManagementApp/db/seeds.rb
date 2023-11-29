@@ -7,10 +7,10 @@
 #   Character.create(name: "Luke", movie: movies.first)
 
 User.create(email: 'test1@example.com', password:"testing1", password_confirmation:"testing1")
+User.create(email: 'test2@example.com', password:"testing2", password_confirmation:"testing2")
 
-5.times do |x|
-  Project.create(title: "Project Title n. #{x}", description:"Project Description n. #{x}")
-end
+Project.create(title: "Project Title n. #1", description:"Project Description n. #1")
+Project.create(title: "Project Title n. #2", description:"Project Description n. #2")
 
 Task.create([{
   title: "Task 1",
@@ -36,20 +36,19 @@ Task.create([{
   title: "Task 5",
   description: "Description 5",
   project_id: 2
+}
+])
+
+Assignment.create([{
+  title: "Assignments 1",
+  description: "Description 1",
+  task_id: 1,
+  user_id: 1
 },
 {
-  title: "Task 6",
-  description: "Description 6",
-  project_id: 3
-},
-{
-  title: "Task 7",
-  description: "Description 7",
-  project_id: 3
-},
-{
-  title: "Task 8",
-  description: "Description 8",
-  project_id: 3
-},
+  title: "Assignments 2",
+  description: "Description 2",
+  task_id: 1,
+  user_id: 2
+}
 ])

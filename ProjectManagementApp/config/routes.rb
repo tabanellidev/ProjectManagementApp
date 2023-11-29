@@ -1,7 +1,14 @@
 Rails.application.routes.draw do
+  get 'assignments/index'
+  get 'users/index'
 
   resources :projects
   resources :tasks
+  resources :assignments
+
+  devise_for :users
+  resources :users
+
   #Tasks
   #get 'tasks/index', to: "task#index"
   #get 'tasks/:id', to: "task#show"
@@ -11,7 +18,7 @@ Rails.application.routes.draw do
   #get '/projects/new', to: "projects#new"
   #get '/projects/:id', to: "projects#show"
 
-  devise_for :users
+
 
   get "home", to: "home#index"
 
