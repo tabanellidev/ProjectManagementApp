@@ -1,6 +1,10 @@
 Rails.application.routes.draw do
+  get 'manages/index'
   get 'assignments/index'
   get 'users/index'
+
+  get 'assignments/:id/complete', to: "assignments#complete"
+  get 'assignments/:id/uncomplete', to: "assignments#uncomplete" #per testing
 
   resources :projects
   resources :tasks
@@ -8,6 +12,8 @@ Rails.application.routes.draw do
 
   devise_for :users
   resources :users
+
+
 
   #Tasks
   #get 'tasks/index', to: "task#index"
@@ -17,7 +23,6 @@ Rails.application.routes.draw do
   #get '/projects/index', to: "projects#index"
   #get '/projects/new', to: "projects#new"
   #get '/projects/:id', to: "projects#show"
-
 
 
   get "home", to: "home#index"

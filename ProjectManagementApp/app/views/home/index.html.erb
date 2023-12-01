@@ -1,17 +1,38 @@
 <h1> Home </h1>
 
-<% if current_user %>
-    <p> Hello <%= current_user.email %>| </p>
-    <p> Name [<%= current_user.name %>] </p>
-    <p> Surname [<%= current_user.surname %>] </p>
-    <p> You are a [<%= current_user.role %>] </p>
-    <p>
-        You have successfully authenticated with your Devise account.
-        You are now ready to interact with this application
-    </p>
-    <%= link_to "Sign out", destroy_user_session_path, 'data-turbo-method': :delete %>
-<% else %>
-    <p> You are not signed in. </p>
-        <%= link_to "Sign Up", new_user_registration_path %>
-        <%= link_to "Login", new_user_session_path %>
-<%  end %>
+Id: <%= @user.id%>
+
+Compiti associati: 
+
+<ul>
+  <% @user.assignments.each do |assignment| %>
+    <% if not assignment.completed? %>
+        <li>
+            <%= assignment.title %> <%= button_to "Info", assignment_path(@user), method: :get%>
+        </li>
+    <% end %>
+  <% end %>
+</ul>
+
+Compiti completati: 
+
+<ul>
+  <% @user.assignments.each do |assignment| %>
+    <% if assignment.completed? %>
+        <li>
+            <%= assignment.title %> <%= button_to "Info", assignment_path(@user), method: :get%>
+        </li>
+    <% end %>
+  <% end %>
+</ul>
+
+Task associati: 
+
+<ul>
+  <% @user.tasks.each do |task| %>
+    <li>
+      <%= task.title %> <%= button_to "Info", task_path(@user), method: :get%>
+    </li>
+  <% end %>
+
+</ul>

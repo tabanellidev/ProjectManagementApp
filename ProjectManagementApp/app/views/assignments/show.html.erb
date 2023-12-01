@@ -1,1 +1,27 @@
-Assignment: <h1><%= @assignment.id %></h1>
+<h1>Assignment: <%= @assignment.id %></h1>
+
+Dati dell'Assignment
+<ul>
+    <li>  Id:  <%= @assignment.id %>  </li>
+    <li>  Title:  <%= @assignment.title %>  </li>
+    <li>  Description:  <%= @assignment.description %>  </li>
+    <li>  Completamento:  <%= @assignment.completed %>  </li>
+    <li>  User:  <%= @assignment.user.name %>  </li>
+    <li>  Task:  <%= @assignment.task.title %>  </li>
+</ul>
+
+<% if current_user.id == @assignment.user.id %>
+
+    Sei il propretario
+
+    <%= button_to "Completa task", { action: "complete", id: @assignment.id }, 
+        method: :get, form: {data: { turbo_confirm: "Are you sure?" } }%>
+    
+    <%= button_to "Uncompleta task", { action: "uncomplete", id: @assignment.id }, 
+    method: :get, form: {data: { turbo_confirm: "Are you sure?" } }%>
+
+<% else %>
+
+    Non sei il propretario
+
+<%  end %>

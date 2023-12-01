@@ -16,8 +16,6 @@ class TasksController < ApplicationController
     puts task_params
     @task = Task.new(task_params)
 
-
-
     if @task.save
       redirect_to @task
     else

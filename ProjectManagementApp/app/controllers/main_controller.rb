@@ -1,6 +1,7 @@
 class MainController < ApplicationController
+
+    skip_before_action :authenticate_user!, only: [:index]
+
     def index
-        #flash.now[:notice] = "Logged in succefully"
-        #flash.now[:alert] = "Invalid email or password"
     end
 end
