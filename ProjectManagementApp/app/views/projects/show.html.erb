@@ -1,10 +1,18 @@
 Progetto: <h1><%= @project.title %></h1>
 
+Diagramma del progetto
 Task associati:
 <ul>
   <% @project.tasks.each do |task| %>
     <li>
-      <%= task.title %> <%= button_to "Info", task_path, method: :get%>
+      <%= task.title %> <%= button_to "Info", task_path(task.id), method: :get%>
+      <ul>
+      <% task.assignments.each do |assignment| %>
+        <li>
+          <%= assignment.title%> <%= button_to "Info", assignment_path(assignment.id), method: :get%>
+        </li>
+      <% end %>
+      </ul>
     </li>
   <% end %>
 

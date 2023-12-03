@@ -1,18 +1,17 @@
 <h1>Task: <%= @task.title %></h1>
 
+Progetto: <%= @task.project.title %> <%= button_to "Info", project_path(@task.project.id), method: :get%>
 
 Dati del Task
 <ul>
     <li>  Id:  <%= @task.id %>  </li>
     <li>  Title:  <%= @task.title %>  </li>
     <li>  Description:  <%= @task.description %>  </li>
-    <li>  Completed:  <%= @task.completed %>  </li>
+    <li>  Status:  <%= @task.completed %>  </li>
 </ul>
 
 
-<% if @task.users.empty?%>
-Nessun utente è ancora assegnato al task
-<% else %>
+
 <h3> Assignment da cui è composto il task </h3>
 <ul>
 
@@ -22,19 +21,15 @@ Nessun utente è ancora assegnato al task
         <li>
           Titolo: <%= assignment.title %> Completamento: <%= assignment.completed %> |  
         </li>
-        <li>
-          Nome: <%= assignment.user.name %> Cognome:<%= assignment.user.surname %>
-        </li>
         <%= button_to "Info", assignment_path(assignment.id), method: :get%>
       </ul>
     </li>
   <% end %>
 
-<% end %>
+
 </ul>
 
 Assegna un utente al task
 <%= button_to "Nuovo assignment", new_assignment_path, method: :get%>
 
 
-</ul>

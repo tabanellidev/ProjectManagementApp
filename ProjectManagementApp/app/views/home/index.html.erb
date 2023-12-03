@@ -8,7 +8,7 @@ Compiti associati:
   <% @user.assignments.each do |assignment| %>
     <% if not assignment.completed? %>
         <li>
-            <%= assignment.title %> <%= button_to "Info", assignment_path(@user), method: :get%>
+            <%= assignment.title %> <%= button_to "Info", assignment_path(assignment.id), method: :get%>
         </li>
     <% end %>
   <% end %>
@@ -20,7 +20,7 @@ Compiti completati:
   <% @user.assignments.each do |assignment| %>
     <% if assignment.completed? %>
         <li>
-            <%= assignment.title %> <%= button_to "Info", assignment_path(@user), method: :get%>
+            <%= assignment.title %> <%= button_to "Info", assignment_path(assignment.id), method: :get%>
         </li>
     <% end %>
   <% end %>
@@ -29,9 +29,9 @@ Compiti completati:
 Task associati: 
 
 <ul>
-  <% @user.tasks.each do |task| %>
+  <% @user.tasks.uniq.each do |task| %>
     <li>
-      <%= task.title %> <%= button_to "Info", task_path(@user), method: :get%>
+      <%= task.title %> <%= button_to "Info", task_path(task.id), method: :get%>
     </li>
   <% end %>
 

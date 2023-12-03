@@ -6,49 +6,104 @@
 #   movies = Movie.create([{ name: "Star Wars" }, { name: "Lord of the Rings" }])
 #   Character.create(name: "Luke", movie: movies.first)
 
-User.create(email: 'test1@example.com', password:"testing1", password_confirmation:"testing1")
-User.create(email: 'test2@example.com', password:"testing2", password_confirmation:"testing2")
+User.create([{
+  email: 'test1@example.com',
+  password:"testing1",
+  password_confirmation:"testing1",
+  name: "Marco",
+  surname: "Rossi"
+},
+{
+  email: 'test2@example.com',
+  password:"testing2",
+  password_confirmation:"testing2",
+  name: "Giuseppe",
+  surname: "Verdi"
+},
+{
+  email: 'test3@example.com',
+  password:"testing3",
+  password_confirmation:"testing3",
+  name: "Luca",
+  surname: "Bianchi"
+}
+])
 
-Project.create(title: "Project Title n. #1", description:"Project Description n. #1")
-Project.create(title: "Project Title n. #2", description:"Project Description n. #2")
+Project.create(title: "Sito e-commerce", description:"L'obiettivo è creare un sito di e-commerce per il cliente")
+Project.create(title: "Creazione modello ML", description:"L'obiettivo del progetto è creare un modello di Machine Learning per la classificazione")
 
 Task.create([{
-  title: "Task 1",
-  description: "Description 1",
-  project_id: 1
+  title: "Definizione Back-end",
+  description: "Lorem ipsum dolor sit amet, consectetur adipisci elit",
+  project_id: 1,
+  completed: 0
 },
 {
-  title: "Task 2",
-  description: "Description 2",
-  project_id: 1
+  title: "Definizione Front-end",
+  description: "Lorem ipsum dolor sit amet, consectetur adipisci elit",
+  project_id: 1,
+  completed: 0
 },
 {
-  title: "Task 3",
-  description: "Description 3",
-  project_id: 1
+  title: "Scelta del modello",
+  description: "Lorem ipsum dolor sit amet, consectetur adipisci elit",
+  project_id: 2,
+  completed: 0
 },
 {
-  title: "Task 4",
-  description: "Description 4",
-  project_id: 2
-},
-{
-  title: "Task 5",
-  description: "Description 5",
-  project_id: 2
+  title: "Serving",
+  description: "Lorem ipsum dolor sit amet, consectetur adipisci elit",
+  project_id: 2,
+  completed: 0
 }
 ])
 
 Assignment.create([{
-  title: "Assignments 1",
-  description: "Description 1",
+  title: "Definizione del modello",
+  description: "Lorem ipsum dolor sit amet, consectetur adipisci elit",
+  completed: 1,
   task_id: 1,
   user_id: 1
 },
 {
-  title: "Assignments 2",
-  description: "Description 2",
+  title: "Test performance diveri motori",
+  description: "Lorem ipsum dolor sit amet, consectetur adipisci elit",
+  completed: 0,
   task_id: 1,
   user_id: 2
+},
+{
+  title: "Costruzione Database",
+  description: "Lorem ipsum dolor sit amet, consectetur adipisci elit",
+  completed: 0,
+  task_id: 1
+},
+{
+  title: "Ricerca Template",
+  description: "Lorem ipsum dolor sit amet, consectetur adipisci elit",
+  completed: 0,
+  task_id: 2,
+  user_id: 3
+},
+{
+  title: "Script di Utility",
+  description: "Lorem ipsum dolor sit amet, consectetur adipisci elit",
+  completed: 0,
+  task_id: 2,
+  user_id: 3
+},
+{
+  title: "Test CNN",
+  description: "Lorem ipsum dolor sit amet, consectetur adipisci elit",
+  completed: 0,
+  task_id: 2,
+  user_id: 3
+},
+{
+  title: "Test RNN",
+  description: "Lorem ipsum dolor sit amet, consectetur adipisci elit",
+  completed: 0,
+  task_id: 2,
+  user_id: 3
 }
 ])

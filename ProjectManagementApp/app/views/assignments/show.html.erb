@@ -1,16 +1,27 @@
 <h1>Assignment: <%= @assignment.id %></h1>
 
+Task: <%= @assignment.task.title %>
+<%= button_to "Info", task_path(@assignment.task.id), method: :get%>
+
+<% if @assignment.user == nil%>
+    Non è ancora stato assegnato
+    <% proprietario = -1 %>
+<% else %>
+    Name: <%= @assignment.user.name %>
+    <%= button_to "Info", user_path(@assignment.user.id), method: :get%>
+    <% proprietario = @assignment.user.id %>
+<% end %>
+
 Dati dell'Assignment
 <ul>
     <li>  Id:  <%= @assignment.id %>  </li>
     <li>  Title:  <%= @assignment.title %>  </li>
     <li>  Description:  <%= @assignment.description %>  </li>
-    <li>  Completamento:  <%= @assignment.completed %>  </li>
-    <li>  User:  <%= @assignment.user.name %>  </li>
+    <li>  Status:  <%= @assignment.completed %>  </li>
     <li>  Task:  <%= @assignment.task.title %>  </li>
 </ul>
 
-<% if current_user.id == @assignment.user.id %>
+<% if current_user.id == proprietario %>
 
     Sei il propretario
 

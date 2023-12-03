@@ -31,7 +31,7 @@ Non ha assegnato nessun task
 <h2> Task assegnati </h2>
 <ul>
 
-  <% @user.tasks.each do |task| %>
+  <% @user.tasks.uniq.each do |task| %>
     <li>
       <%= task.title %> <%= button_to "Info", task_path, method: :get%>
     </li>
