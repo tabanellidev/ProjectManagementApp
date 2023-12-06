@@ -9,6 +9,7 @@ Rails.application.routes.draw do
   resources :projects
   resources :tasks
   resources :assignments
+  resources :manages
 
   devise_for :users
   resources :users

@@ -1,9 +1,36 @@
-<h1>Assignment#index</h1>
+<h1> Storico dei compiti </h1>
 
+<h3> Compiti non ancora assegnati </h3>
 <ul>
   <% @assignments.each do |assignment| %>
+    <% if assignment.user.id == 0 %>
     <li>
-      User_id: <%= assignment.user_id %>  Task_id: <%= assignment.task_id %> <%= button_to "Info", {action: "show", id: assignment.id}, method: :get %>
+      Task: <%= assignment.task.title %> <%= button_to "Info", {action: "show", id: assignment.id}, method: :get %>
     </li>
+    <% end %>
+  <% end %>
+</ul>
+
+<h3> Compiti non ancora completati </h3>
+<ul>
+  <% @assignments.each do |assignment| %>
+    <% if assignment.user.id != 0 and assignment.completed == 'Uncompleted' %>
+    <li>
+      Utente: <%= assignment.user.name %> <%= assignment.user.surname %> 
+      Task: <%= assignment.task.title %> <%= button_to "Info", {action: "show", id: assignment.id}, method: :get %>
+    </li>
+    <% end %>
+  <% end %>
+</ul>
+
+<h3> Compiti completati </h3>
+<ul>
+  <% @assignments.each do |assignment| %>
+    <% if assignment.user.id != 0 and assignment.completed == 'Completed' %>
+    <li>
+      Utente: <%= assignment.user.name %> <%= assignment.user.surname %> 
+      Task: <%= assignment.task.title %> <%= button_to "Info", {action: "show", id: assignment.id}, method: :get %>
+    </li>
+    <% end %>
   <% end %>
 </ul>

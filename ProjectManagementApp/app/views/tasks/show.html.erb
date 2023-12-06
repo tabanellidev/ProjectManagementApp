@@ -30,6 +30,11 @@ Dati del Task
 </ul>
 
 Assegna un utente al task
-<%= button_to "Nuovo assignment", new_assignment_path, method: :get%>
+<%= button_to "Nuovo assignment", new_assignment_path, params:{task_id: @task.id}, method: :get%>
+<br>
+<%= button_to "Modifica Task", edit_task_path, params:{task: @task.id} , method: :get  %>
+<br>
+<%= button_to "Elimina Task", { action: "destroy", id: @task.id }, 
+        method: :delete, form: {data: { turbo_confirm: "Are you sure?" } }%>
 
 

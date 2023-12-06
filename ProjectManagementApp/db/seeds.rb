@@ -7,9 +7,17 @@
 #   Character.create(name: "Luke", movie: movies.first)
 
 User.create([{
+  id: 0,
+  email: 'unassigned@example.com',
+  password:"unassigned",
+  password_confirmation:"unassigned",
+  name: "Unassigned",
+  surname: "Unassigned"
+},{
   email: 'test1@example.com',
   password:"testing1",
   password_confirmation:"testing1",
+  role: 1,
   name: "Marco",
   surname: "Rossi"
 },
@@ -96,14 +104,28 @@ Assignment.create([{
   title: "Test CNN",
   description: "Lorem ipsum dolor sit amet, consectetur adipisci elit",
   completed: 0,
-  task_id: 2,
-  user_id: 3
+  task_id: 3,
+  user_id: 2
 },
 {
   title: "Test RNN",
   description: "Lorem ipsum dolor sit amet, consectetur adipisci elit",
   completed: 0,
-  task_id: 2,
+  task_id: 3,
+  user_id: 2
+}
+])
+
+Manage.create([{
+  project_id: 1,
+  user_id: 1
+},
+{
+  project_id: 1,
+  user_id: 2
+},
+{
+  project_id: 2,
   user_id: 3
 }
 ])

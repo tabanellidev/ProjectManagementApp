@@ -7,8 +7,29 @@ class AssignmentsController < ApplicationController
     @assignment = Assignment.find(params[:id])
   end
 
-  def new
-    @assignment = Assignment.new
+  def edit
+    @assignment = Assignment.find(params[:id])
+  end
+
+  def update
+
+    @assignment = Assignment.find(params[:id])
+
+    if @assignment.update(assignment_params)
+      redirect_to @assignment
+    else
+      render :edit, status: :unprocessable_entity
+    end
+
+  end
+
+  def destroy
+
+    @assignment = Assignment.find(params[:id])
+    @assignment.destroy
+
+    redirect_to action: "index"
+
   end
 
   def complete
@@ -27,10 +48,9 @@ class AssignmentsController < ApplicationController
 
     if task_completed
       @task = Task.find(@assignment.task.id)
-      @task.completed = true
+      task.completed = 1
       @task.save
     end
-
 
     redirect_to @assignment
   end
@@ -42,6 +62,10 @@ class AssignmentsController < ApplicationController
     @assignment.save
 
     redirect_to @assignment
+  end
+
+  def new
+    @assignment = Assignment.new
   end
 
   def create

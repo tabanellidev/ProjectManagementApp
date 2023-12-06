@@ -1,0 +1,33 @@
+<h1> Crea nuova Gestione </h1>
+
+<%= form_with model: @manage do |form| %>
+  <div>
+    <%= form.label :user_id %><br>
+    <%= form.number_field :user_id %> 
+    <% @manage.errors.full_messages_for(:user_id).each do |message| %>
+      <div><%= message %></div>
+    <% end %>
+  </div>
+
+  <% if params[:project_id].nil? %>
+
+    <%= form.label :project_id %><br>
+    <%= form.number_field :project_id %> 
+    <% @manage.errors.full_messages_for(:project_id).each do |message| %>
+      <div><%= message %></div>
+    <% end %>
+
+  <% else %>
+
+    <%= form.label :project_id %><br>
+    <%= form.number_field :project_id, value: params[:project_id], readonly: true %> 
+    <% @manage.errors.full_messages_for(:project_id).each do |message| %>
+      <div><%= message %></div>
+    <% end %>
+
+  <% end %>
+
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>

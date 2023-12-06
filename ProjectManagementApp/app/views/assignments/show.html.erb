@@ -36,3 +36,9 @@ Dati dell'Assignment
     Non sei il propretario
 
 <%  end %>
+
+<br>
+<%= button_to "Modifica Assignment", edit_assignment_path, params:{assignment: @assignment.id} , method: :get  %>
+<br>
+<%= button_to "Elimina Assignment", { action: "destroy", id: @assignment.id }, 
+        method: :delete, form: {data: { turbo_confirm: "Are you sure?" } }%>

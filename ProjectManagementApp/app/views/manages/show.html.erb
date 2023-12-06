@@ -1,0 +1,15 @@
+<h1>Gestione: <%= @manage.id %></h1>
+
+<ul>
+    <li>  Id:  <%= @manage.id %>  </li>
+    <li>  Gestore:  <%= @manage.user.name %>  <%= @manage.user.surname %></li>
+    <li>  Progetto:  <%= @manage.project.id %>  </li>
+    <li>  Titolo:  <%= @manage.project.title %>  </li>
+    <li>  Descrizione:  <%= @manage.project.description %>  </li>
+</ul>
+
+<br>
+<%= button_to "Modifica Gestione", edit_manage_path, params:{manage: @manage.id} , method: :get  %>
+<br>
+<%= button_to "Elimina Gestione", { action: "destroy", id: @manage.id }, 
+        method: :delete, form: {data: { turbo_confirm: "Are you sure?" } }%>

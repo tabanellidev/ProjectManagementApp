@@ -1,8 +1,33 @@
-Progetto: <h1><%= @project.title %></h1>
+<h1>Progetto: <%= @project.id %></h1>
 
-Diagramma del progetto
-Task associati:
-<ul>
+<i> Identificativo: </i> <br>
+<%= @project.title %>
+<br>
+<i> Descrizione: </i> <br>
+<%= @project.description %> 
+<br>
+
+
+
+
+<% if @project.users.empty?%>
+  Questo progetto non ha ancora un gestore
+<% else %>
+  <ul>
+  <% @project.users.each do |user| %>
+    <li>
+      Gestore: <%= user.name %> <%= user.surname %>
+    </li>
+  <% end %>
+  </ul>
+<% end %>
+
+<% if @project.tasks.empty? %>
+  Non vi sono ancora task associati
+<% else %>
+  Diagramma del progetto<br>
+  Task associati:
+  <ul>
   <% @project.tasks.each do |task| %>
     <li>
       <%= task.title %> <%= button_to "Info", task_path(task.id), method: :get%>
@@ -15,7 +40,14 @@ Task associati:
       </ul>
     </li>
   <% end %>
-
 </ul>
-
+<% end %>
+<br>
+<%= button_to "Assegna gestore", new_manage_path, params:{project_id: @project.id}, method: :get  %>
+<br>
 <%= button_to "Crea Task", new_task_path, params:{project_id: @project.id} , method: :get  %>
+<br>
+<%= button_to "Modifica progetto", edit_project_path, params:{project_id: @project.id} , method: :get  %>
+<br>
+<%= button_to "Elimina progetto", { action: "destroy", id: @project.id }, 
+        method: :delete, form: {data: { turbo_confirm: "Are you sure?" } }%>

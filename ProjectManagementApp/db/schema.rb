@@ -12,7 +12,7 @@
 
 ActiveRecord::Schema[7.0].define(version: 2023_12_01_080528) do
   create_table "assignments", force: :cascade do |t|
-    t.integer "user_id"
+    t.integer "user_id", default: 0, null: false
     t.integer "task_id", null: false
     t.string "title"
     t.string "description"

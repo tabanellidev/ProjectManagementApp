@@ -1,4 +1,4 @@
-<h1>New Assignment</h1>
+<h1>Modifica Assignment</h1>
 
 <%= form_with model: @assignment do |form| %>
   <div>
@@ -25,25 +25,12 @@
     <% end %>
   </div>
 
-  <% if params[:task_id].nil? %>
 
-    <%= form.label :task_id %><br>
-    <%= form.number_field :task_id %> 
-    <% @assignment.errors.full_messages_for(:task_id).each do |message| %>
-      <div><%= message %></div>
-    <% end %>
-
-  <% else %>
-
-    <%= form.label :task_id %><br>
-    <%= form.number_field :task_id, value: params[:task_id], readonly: true %> 
-    <% @assignment.errors.full_messages_for(:task_id).each do |message| %>
-      <div><%= message %></div>
-    <% end %>
-
-  <% end %>
+  
 
   <div>
     <%= form.submit %>
   </div>
 <% end %>
+
+

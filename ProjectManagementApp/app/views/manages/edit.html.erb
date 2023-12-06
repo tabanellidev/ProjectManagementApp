@@ -1,0 +1,26 @@
+<h1>Modifica Gestione</h1>
+
+Identificativo: <%= @manage.id %>
+
+<%= form_with model: @manage do |form| %>
+  <div>
+    <%= form.label :user_id %><br>
+    <%= form.number_field :user_id %> 
+    <% @manage.errors.full_messages_for(:user_id).each do |message| %>
+      <div><%= message %></div>
+    <% end %>
+  </div>
+
+  <div>
+    <%= form.label :project_id %><br>
+    <%= form.number_field :project_id %> 
+    <% @manage.errors.full_messages_for(:project_id).each do |message| %>
+      <div><%= message %></div>
+    <% end %>
+  </div>
+
+
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>
