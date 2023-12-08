@@ -1,7 +1,6 @@
 Rails.application.routes.draw do
-  get 'manages/index'
-  get 'assignments/index'
-  get 'users/index'
+
+  get '/notauthorized', to: 'main#notauthorized'
 
   get 'assignments/:id/complete', to: "assignments#complete"
   get 'assignments/:id/uncomplete', to: "assignments#uncomplete" #per testing

@@ -1,5 +1,19 @@
 class ProjectsController < ApplicationController
 
+  before_action :admin?, only: [:destroy]
+  before_action :senior?, only: [:new, :create]
+
+  def manager?
+
+    if (! @project.users.distinct.pluck("id").include? current_user.id) or (! @current_user.role == 'admin')
+
+      puts("do not manage")
+      redirect_to :controller => "main", :action => 'notauthorized'
+
+    end
+
+  end
+
   def index
     @projects = Project.all
   end
@@ -9,7 +23,11 @@ class ProjectsController < ApplicationController
   end
 
   def edit
+
     @project = Project.find(params[:id])
+
+    manager?
+
   end
 
   def update
@@ -41,6 +59,10 @@ class ProjectsController < ApplicationController
     @project = Project.new(project_params)
 
     if @project.save
+
+      @manage = Manage.new(user_id: current_user.id, project_id: @project.id)
+      @manage.save
+
       redirect_to @project
     else
       render :new, status: :unprocessable_entity

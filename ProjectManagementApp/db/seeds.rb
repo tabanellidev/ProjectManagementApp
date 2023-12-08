@@ -17,7 +17,7 @@ User.create([{
   email: 'test1@example.com',
   password:"testing1",
   password_confirmation:"testing1",
-  role: 1,
+  role: 2,
   name: "Marco",
   surname: "Rossi"
 },
@@ -25,6 +25,7 @@ User.create([{
   email: 'test2@example.com',
   password:"testing2",
   password_confirmation:"testing2",
+  role: 1,
   name: "Giuseppe",
   surname: "Verdi"
 },

@@ -1,5 +1,18 @@
 class TasksController < ApplicationController
 
+  before_action :admin?, only: [:destroy]
+
+  def manager?
+
+    if (! @task.project.users.distinct.pluck("id").include? current_user.id) or (! @current_user.role == 'admin')
+
+      puts("do not manage")
+      redirect_to :controller => "main", :action => 'notauthorized'
+
+    end
+
+  end
+
   def index
     @tasks = Task.all
   end
@@ -10,6 +23,8 @@ class TasksController < ApplicationController
 
   def edit
     @task = Task.find(params[:id])
+
+    #manager?
   end
 
   def update
@@ -38,8 +53,10 @@ class TasksController < ApplicationController
   end
 
   def create
-    puts task_params
+
     @task = Task.new(task_params)
+
+    #manager?
 
     if @task.save
       redirect_to @task

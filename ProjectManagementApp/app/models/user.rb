@@ -4,7 +4,7 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
-  enum role: [:developer, :admin]
+  enum role: [:developer, :developer_senior, :admin]
 
   has_many :assignments
   has_many :tasks, through: :assignments
