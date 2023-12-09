@@ -1,4 +1,11 @@
 class AssignmentsController < ApplicationController
+
+  def manager?
+
+    (@assignment.task.project.users.distinct.pluck("id").include? current_user.id) or (@current_user.role == 'admin')
+
+  end
+
   def index
     @assignments = Assignment.all
   end
@@ -9,6 +16,12 @@ class AssignmentsController < ApplicationController
 
   def edit
     @assignment = Assignment.find(params[:id])
+
+    if not manager?
+      puts("do not manage")
+      redirect_to :controller => "main", :action => 'notauthorized'
+    end
+
   end
 
   def update
@@ -26,33 +39,52 @@ class AssignmentsController < ApplicationController
   def destroy
 
     @assignment = Assignment.find(params[:id])
-    @assignment.destroy
 
-    redirect_to action: "index"
+    if manager?
+
+      @assignment.destroy
+
+      redirect_to action: "index"
+
+    else
+
+      redirect_to :controller => "main", :action => 'notauthorized'
+
+    end
 
   end
 
   def complete
     @assignment = Assignment.find(params[:id])
 
-    @assignment.completed = 1
-    @assignment.save
+    if @assignment.user.id == current_user.id
 
-    task_completed = true
+      @assignment.completed = 1
+      @assignment.save
 
-    @assignment.task.assignments.each do |assignment|
-      if not assignment.completed?
-        task_completed = false
+      task_completed = true
+
+      @assignment.task.assignments.each do |assignment|
+        if not assignment.completed?
+          task_completed = false
+        end
       end
+
+      if task_completed
+        @task = Task.find(@assignment.task.id)
+        @task.completed = 1
+        @task.save
+      end
+
+      redirect_to @assignment
+
+    else
+
+      redirect_to :controller => "main", :action => 'notauthorized'
+
     end
 
-    if task_completed
-      @task = Task.find(@assignment.task.id)
-      task.completed = 1
-      @task.save
-    end
 
-    redirect_to @assignment
   end
 
   def uncomplete
@@ -71,10 +103,18 @@ class AssignmentsController < ApplicationController
   def create
     @assignment = Assignment.new(assignment_params)
 
-    if @assignment.save
-      redirect_to @assignment
+    if not manager?
+      puts("do not manage")
+      redirect_to :controller => "main", :action => 'notauthorized'
     else
-      render :new, status: :unprocessable_entity
+
+      if @assignment.save
+        redirect_to @assignment
+      else
+        params[:task_id] = @assignment.task_id
+        render :new, status: :unprocessable_entity
+      end
+
     end
   end
 

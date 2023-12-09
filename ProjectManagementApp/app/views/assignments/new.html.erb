@@ -1,5 +1,7 @@
 <h1>New Assignment</h1>
 
+Per il rask con identificativo <%= params[:task_id] %>
+
 <%= form_with model: @assignment do |form| %>
   <div>
     <%= form.label :title %><br>
@@ -25,23 +27,10 @@
     <% end %>
   </div>
 
-  <% if params[:task_id].nil? %>
 
-    <%= form.label :task_id %><br>
-    <%= form.number_field :task_id %> 
-    <% @assignment.errors.full_messages_for(:task_id).each do |message| %>
-      <div><%= message %></div>
-    <% end %>
+   <%= form.hidden_field :task_id, value: params[:task_id] %>
 
-  <% else %>
 
-    <%= form.label :task_id %><br>
-    <%= form.number_field :task_id, value: params[:task_id], readonly: true %> 
-    <% @assignment.errors.full_messages_for(:task_id).each do |message| %>
-      <div><%= message %></div>
-    <% end %>
-
-  <% end %>
 
   <div>
     <%= form.submit %>

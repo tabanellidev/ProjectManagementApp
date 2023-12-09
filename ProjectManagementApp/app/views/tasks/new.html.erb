@@ -17,23 +17,8 @@
     <% end %>
   </div>
 
-  <% if params[:project_id].nil? %>
+   <%= form.hidden_field :project_id, value: params[:project_id] %>
 
-    <%= form.label :project_id %><br>
-    <%= form.number_field :project_id %> 
-    <% @task.errors.full_messages_for(:project_id).each do |message| %>
-      <div><%= message %></div>
-    <% end %>
-
-  <% else %>
-
-    <%= form.label :project_id %><br>
-    <%= form.number_field :project_id, value: params[:project_id], readonly: true %> 
-    <% @task.errors.full_messages_for(:project_id).each do |message| %>
-      <div><%= message %></div>
-    <% end %>
-
-  <% end %>
    <div>
     
   </div>

@@ -1,6 +1,13 @@
 <h1>Modifica Gestione</h1>
 
-Identificativo: <%= @manage.id %>
+Identificativo: <%= @manage.id %> <br>
+
+<% if @manage.errors.any? %>
+Errori:<br>
+  <% @manage.errors.full_messages.each do |message|%>
+  <%= message %> <br>
+  <%end%>
+<%end%>
 
 <%= form_with model: @manage do |form| %>
   <div>

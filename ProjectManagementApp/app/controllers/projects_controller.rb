@@ -5,12 +5,7 @@ class ProjectsController < ApplicationController
 
   def manager?
 
-    if (! @project.users.distinct.pluck("id").include? current_user.id) or (! @current_user.role == 'admin')
-
-      puts("do not manage")
-      redirect_to :controller => "main", :action => 'notauthorized'
-
-    end
+    (@project.users.distinct.pluck("id").include? current_user.id) or (@current_user.role == 'admin')
 
   end
 
@@ -26,7 +21,10 @@ class ProjectsController < ApplicationController
 
     @project = Project.find(params[:id])
 
-    manager?
+    if not manager?
+      puts("do not manage")
+      redirect_to :controller => "main", :action => 'notauthorized'
+    end
 
   end
 

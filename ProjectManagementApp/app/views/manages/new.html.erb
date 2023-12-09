@@ -1,5 +1,14 @@
 <h1> Crea nuova Gestione </h1>
 
+Stai creando un gestore per il progetto: <%= params[:project_id] %> <br>
+
+<% if @manage.errors.any? %>
+Errori:<br>
+  <% @manage.errors.full_messages.each do |message|%>
+  <%= message %> <br>
+  <%end%>
+<%end%>
+
 <%= form_with model: @manage do |form| %>
   <div>
     <%= form.label :user_id %><br>
@@ -9,23 +18,10 @@
     <% end %>
   </div>
 
-  <% if params[:project_id].nil? %>
+  <%= form.hidden_field :project_id, value: params[:project_id] %>
 
-    <%= form.label :project_id %><br>
-    <%= form.number_field :project_id %> 
-    <% @manage.errors.full_messages_for(:project_id).each do |message| %>
-      <div><%= message %></div>
-    <% end %>
 
-  <% else %>
 
-    <%= form.label :project_id %><br>
-    <%= form.number_field :project_id, value: params[:project_id], readonly: true %> 
-    <% @manage.errors.full_messages_for(:project_id).each do |message| %>
-      <div><%= message %></div>
-    <% end %>
-
-  <% end %>
 
   <div>
     <%= form.submit %>

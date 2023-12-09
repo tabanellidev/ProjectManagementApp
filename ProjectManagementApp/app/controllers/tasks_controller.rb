@@ -1,15 +1,8 @@
 class TasksController < ApplicationController
 
-  before_action :admin?, only: [:destroy]
-
   def manager?
 
-    if (! @task.project.users.distinct.pluck("id").include? current_user.id) or (! @current_user.role == 'admin')
-
-      puts("do not manage")
-      redirect_to :controller => "main", :action => 'notauthorized'
-
-    end
+    (@task.project.users.distinct.pluck("id").include? current_user.id) or (@current_user.role == 'admin')
 
   end
 
@@ -24,7 +17,11 @@ class TasksController < ApplicationController
   def edit
     @task = Task.find(params[:id])
 
-    #manager?
+    if not manager?
+      puts("do not manage")
+      redirect_to :controller => "main", :action => 'notauthorized'
+    end
+
   end
 
   def update
@@ -42,26 +39,46 @@ class TasksController < ApplicationController
   def destroy
 
     @task = Task.find(params[:id])
-    @task.destroy
 
-    redirect_to action: "index"
+    if manager?
+
+      @task.destroy
+
+      redirect_to action: "index"
+
+    else
+
+      redirect_to :controller => "main", :action => 'notauthorized'
+
+    end
 
   end
 
   def new
     @task = Task.new
+
+    @project = Project.find(params[:project_id])
+
+    if not (@project.users.distinct.pluck("id").include? current_user.id) or (@current_user.role == 'admin')
+      redirect_to :controller => "main", :action => 'notauthorized'
+    end
+
   end
 
   def create
 
     @task = Task.new(task_params)
-
-    #manager?
-
-    if @task.save
-      redirect_to @task
+    #Da considerare soluzione alternativa
+    if not manager?
+      puts("do not manage")
+      redirect_to :controller => "main", :action => 'notauthorized'
     else
-      render :new, status: :unprocessable_entity
+      if @task.save
+        redirect_to @task
+      else
+        params[:project_id] = @task.project_id
+        render :new, status: :unprocessable_entity
+      end
     end
 
   end
