@@ -1,12 +1,20 @@
 <h1>Progetto: <%= @project.id %></h1>
 
-<i> Identificativo: </i> <br>
+<i> Titolo: </i> <br>
 <%= @project.title %>
 <br>
 <i> Descrizione: </i> <br>
 <%= @project.description %> 
 <br>
+Status: <%= @project.status %> 
+<br>
+Date
+<ul>
+    <li>  Inizio:  <%= @project.start_date %>  </li>
+    <%if @project.status == 'Completed' %> <li> Fine:  <%=@project.completion_date %> </li> <% end %>
+    <li>  Scadenza:  <%= @project.expiration_date %>  </li>
 
+</ul>
 
 
 

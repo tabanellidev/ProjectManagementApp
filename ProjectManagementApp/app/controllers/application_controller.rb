@@ -18,5 +18,8 @@ class ApplicationController < ActionController::Base
 
   end
 
+  rescue_from 'ActionController::ParameterMissing' do |exception|
+    render json: { error: 'No params provided' }, status: 401
+  end
 
 end

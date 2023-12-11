@@ -16,7 +16,10 @@ ActiveRecord::Schema[7.0].define(version: 2023_12_01_080528) do
     t.integer "task_id", null: false
     t.string "title"
     t.string "description"
-    t.integer "completed", default: 0
+    t.date "start_date"
+    t.date "expiration_date"
+    t.date "completion_date"
+    t.integer "status", default: 0
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["task_id"], name: "index_assignments_on_task_id"
@@ -35,6 +38,10 @@ ActiveRecord::Schema[7.0].define(version: 2023_12_01_080528) do
   create_table "projects", force: :cascade do |t|
     t.string "title"
     t.string "description"
+    t.date "start_date"
+    t.date "expiration_date"
+    t.date "completion_date"
+    t.integer "status", default: 0
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -42,7 +49,10 @@ ActiveRecord::Schema[7.0].define(version: 2023_12_01_080528) do
   create_table "tasks", force: :cascade do |t|
     t.string "title"
     t.string "description"
-    t.integer "completed", default: 0
+    t.date "start_date"
+    t.date "expiration_date"
+    t.date "completion_date"
+    t.integer "status", default: 0
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "project_id"

@@ -3,7 +3,9 @@ Rails.application.routes.draw do
   get '/notauthorized', to: 'main#notauthorized'
 
   get 'assignments/:id/complete', to: "assignments#complete"
+
   get 'assignments/:id/uncomplete', to: "assignments#uncomplete" #per testing
+  get 'assignments/:id/expire', to: "assignments#expire" #per testing
 
   resources :projects
   resources :tasks

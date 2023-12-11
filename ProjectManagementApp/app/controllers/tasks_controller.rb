@@ -57,9 +57,9 @@ class TasksController < ApplicationController
   def new
     @task = Task.new
 
-    @project = Project.find(params[:project_id])
+    @project = Project.find(project_params)
 
-    if not (@project.users.distinct.pluck("id").include? current_user.id) or (@current_user.role == 'admin')
+    if not ((@project.users.distinct.pluck("id").include? current_user.id) or (@current_user.role == 'admin'))
       redirect_to :controller => "main", :action => 'notauthorized'
     end
 
@@ -85,7 +85,11 @@ class TasksController < ApplicationController
 
   private
     def task_params
-      params.require(:task).permit(:title, :description, :project_id)
+      params.require(:task).permit(:title, :description, :start_date, :expiration_date, :project_id)
+    end
+
+    def project_params
+      params.require(:project_id)
     end
 
 end

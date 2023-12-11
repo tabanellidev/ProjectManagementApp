@@ -1,6 +1,6 @@
 <h1>New Assignment</h1>
 
-Per il rask con identificativo <%= params[:task_id] %>
+Per il task con identificativo <%= params[:task_id] %>
 
 <%= form_with model: @assignment do |form| %>
   <div>
@@ -23,6 +23,22 @@ Per il rask con identificativo <%= params[:task_id] %>
     <%= form.label :user_id %><br>
     <%= form.number_field :user_id %> 
     <% @assignment.errors.full_messages_for(:user_id).each do |message| %>
+      <div><%= message %></div>
+    <% end %>
+  </div>
+
+  <div>
+    <%= form.label :start_date %><br>
+    <%= form.date_field :start_date, value: Date.today %> 
+    <% @assignment.errors.full_messages_for(:start_date).each do |message| %>
+      <div><%= message %></div>
+    <% end %>
+  </div>
+
+  <div>
+    <%= form.label :expiration_date %><br>
+    <%= form.date_field :expiration_date %> 
+    <% @assignment.errors.full_messages_for(:expiration_date).each do |message| %>
       <div><%= message %></div>
     <% end %>
   </div>

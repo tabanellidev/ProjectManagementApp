@@ -7,7 +7,11 @@ class CreateAssignments < ActiveRecord::Migration[7.0]
       t.string :title
       t.string :description
 
-      t.integer :completed, default: 0
+      t.date :start_date
+      t.date :expiration_date
+      t.date :completion_date
+
+      t.integer :status, default: 0
 
       t.timestamps
     end

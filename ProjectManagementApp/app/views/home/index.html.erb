@@ -6,7 +6,7 @@ Compiti associati:
 
 <ul>
   <% @user.assignments.each do |assignment| %>
-    <% if not assignment.completed? %>
+    <% if not assignment.status? %>
         <li>
             <%= assignment.title %> <%= button_to "Info", assignment_path(assignment.id), method: :get%>
         </li>
@@ -18,7 +18,7 @@ Compiti completati:
 
 <ul>
   <% @user.assignments.each do |assignment| %>
-    <% if assignment.completed? %>
+    <% if assignment.status? %>
         <li>
             <%= assignment.title %> <%= button_to "Info", assignment_path(assignment.id), method: :get%>
         </li>

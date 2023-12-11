@@ -38,82 +38,117 @@ User.create([{
 }
 ])
 
-Project.create(title: "Sito e-commerce", description:"L'obiettivo è creare un sito di e-commerce per il cliente")
-Project.create(title: "Creazione modello ML", description:"L'obiettivo del progetto è creare un modello di Machine Learning per la classificazione")
+
+Project.create([{
+  title: "Sito e-commerce",
+  description: "L'obiettivo è creare un sito di e-commerce per il cliente",
+  start_date: DateTime.new(2023,12,1),
+  expiration_date: DateTime.new(2023,12,20),
+},
+{
+  title: "Creazione modello ML",
+  description: "L'obiettivo è creare un sito di e-commerce per il cliente",
+  start_date: DateTime.new(2023,12,1),
+  expiration_date: DateTime.new(2023,11,15),
+  completion_date: DateTime.new(2023,12,5)
+}
+])
 
 Task.create([{
   title: "Definizione Back-end",
   description: "Lorem ipsum dolor sit amet, consectetur adipisci elit",
   project_id: 1,
-  completed: 0
+  status: 1,
+  start_date: DateTime.new(2023,12,1),
+  expiration_date: DateTime.new(2023,12,5),
+  completion_date: DateTime.new(2023,12,3)
 },
 {
   title: "Definizione Front-end",
   description: "Lorem ipsum dolor sit amet, consectetur adipisci elit",
   project_id: 1,
-  completed: 0
+  status: 0,
+  start_date: DateTime.new(2023,12,1),
+  expiration_date: DateTime.new(2023,12,5),
+  completion_date: DateTime.new(2023,12,3)
 },
 {
   title: "Scelta del modello",
   description: "Lorem ipsum dolor sit amet, consectetur adipisci elit",
   project_id: 2,
-  completed: 0
+  status: 0,
+  start_date: DateTime.new(2023,12,1),
+  expiration_date: DateTime.new(2023,12,5),
 },
 {
   title: "Serving",
   description: "Lorem ipsum dolor sit amet, consectetur adipisci elit",
   project_id: 2,
-  completed: 0
+  status: 0,
+  start_date: DateTime.new(2023,12,1),
+  expiration_date: DateTime.new(2023,12,5),
 }
 ])
 
 Assignment.create([{
   title: "Definizione del modello",
   description: "Lorem ipsum dolor sit amet, consectetur adipisci elit",
-  completed: 1,
+  status: 1,
   task_id: 1,
-  user_id: 1
+  user_id: 1,
+  start_date: DateTime.new(2023,12,1),
+  expiration_date: DateTime.new(2023,12,10),
+  completion_date: DateTime.new(2023,12,5)
 },
 {
   title: "Test performance diveri motori",
   description: "Lorem ipsum dolor sit amet, consectetur adipisci elit",
-  completed: 0,
+  status: 1,
   task_id: 1,
-  user_id: 2
+  user_id: 2,
+  start_date: DateTime.new(2023,12,1),
+  expiration_date: DateTime.new(2023,12,10),
+  completion_date: DateTime.new(2023,12,3)
 },
 {
   title: "Costruzione Database",
   description: "Lorem ipsum dolor sit amet, consectetur adipisci elit",
-  completed: 0,
-  task_id: 1
+  task_id: 1,
+  user_id: 2,
+  status: 1,
+  start_date: DateTime.new(2023,12,1),
+  expiration_date: DateTime.new(2023,12,15)
 },
 {
   title: "Ricerca Template",
   description: "Lorem ipsum dolor sit amet, consectetur adipisci elit",
-  completed: 0,
   task_id: 2,
-  user_id: 3
+  user_id: 3,
+  start_date: DateTime.new(2023,12,1),
+  expiration_date: DateTime.new(2023,12,3)
 },
 {
   title: "Script di Utility",
   description: "Lorem ipsum dolor sit amet, consectetur adipisci elit",
-  completed: 0,
   task_id: 2,
-  user_id: 3
+  user_id: 3,
+  start_date: DateTime.new(2023,12,1),
+  expiration_date: DateTime.new(2023,12,20)
 },
 {
   title: "Test CNN",
   description: "Lorem ipsum dolor sit amet, consectetur adipisci elit",
-  completed: 0,
   task_id: 3,
-  user_id: 2
+  user_id: 2,
+  start_date: DateTime.new(2023,12,1),
+  expiration_date: DateTime.new(2023,12,3)
 },
 {
   title: "Test RNN",
   description: "Lorem ipsum dolor sit amet, consectetur adipisci elit",
-  completed: 0,
   task_id: 3,
-  user_id: 2
+  start_date: DateTime.new(2023,12,1),
+  expiration_date: DateTime.new(2023,12,20)
 }
 ])
 

@@ -57,24 +57,19 @@ class AssignmentsController < ApplicationController
   def complete
     @assignment = Assignment.find(params[:id])
 
-    if @assignment.user.id == current_user.id
+    if @assignment.user.id == current_user.id || current_user.role == 'admin'
 
-      @assignment.completed = 1
+      @assignment.completion_date = Date.today
+
+      if @assignment.completion_date <= @assignment.expiration_date
+        @assignment.status = 'Completed'
+      else
+        @assignment.status = 'Delayed'
+      end
+
       @assignment.save
 
-      task_completed = true
-
-      @assignment.task.assignments.each do |assignment|
-        if not assignment.completed?
-          task_completed = false
-        end
-      end
-
-      if task_completed
-        @task = Task.find(@assignment.task.id)
-        @task.completed = 1
-        @task.save
-      end
+      Task.complete(@assignment.task)
 
       redirect_to @assignment
 
@@ -90,7 +85,16 @@ class AssignmentsController < ApplicationController
   def uncomplete
     @assignment = Assignment.find(params[:id])
 
-    @assignment.completed = 0
+    @assignment.status = 0
+    @assignment.save
+
+    redirect_to @assignment
+  end
+
+  def expire
+    @assignment = Assignment.find(params[:id])
+
+    @assignment.status = 2
     @assignment.save
 
     redirect_to @assignment
@@ -120,7 +124,7 @@ class AssignmentsController < ApplicationController
 
   private
   def assignment_params
-    params.require(:assignment).permit(:title, :description, :user_id, :task_id)
+    params.require(:assignment).permit(:title, :description, :start_date, :expiration_date, :user_id, :task_id)
   end
 
 end

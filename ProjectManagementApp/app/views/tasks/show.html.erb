@@ -7,10 +7,16 @@ Dati del Task
     <li>  Id:  <%= @task.id %>  </li>
     <li>  Title:  <%= @task.title %>  </li>
     <li>  Description:  <%= @task.description %>  </li>
-    <li>  Status:  <%= @task.completed %>  </li>
+    <li>  Status:  <%= @task.status %>  </li>
 </ul>
 
+Date
+<ul>
+    <li>  Inizio:  <%= @task.start_date %>  </li>
+    <%if @task.status == 'Completed' %> <li> Fine:  <%=@task.completion_date %> </li> <% end %>
+    <li>  Scadenza:  <%= @task.expiration_date %>  </li>
 
+</ul>
 
 <h3> Assignment da cui è composto il task </h3>
 <ul>
@@ -19,7 +25,7 @@ Dati del Task
     <li>
       <ul>
         <li>
-          Titolo: <%= assignment.title %> Completamento: <%= assignment.completed %> |  
+          Titolo: <%= assignment.title %> Status: <%= assignment.status %> |  
         </li>
         <%= button_to "Info", assignment_path(assignment.id), method: :get%>
       </ul>

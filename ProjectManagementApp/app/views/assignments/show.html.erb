@@ -17,10 +17,16 @@ Dati dell'Assignment
     <li>  Id:  <%= @assignment.id %>  </li>
     <li>  Title:  <%= @assignment.title %>  </li>
     <li>  Description:  <%= @assignment.description %>  </li>
-    <li>  Status:  <%= @assignment.completed %>  </li>
+    <li>  Status:  <%= @assignment.status %>  </li>
     <li>  Task:  <%= @assignment.task.title %>  </li>
 </ul>
+Date
+<ul>
+    <li>  Inizio:  <%= @assignment.start_date %>  </li>
+    <%if @assignment.status == 'Completed' %> <li> Fine:  <%=@assignment.completion_date %> </li> <% end %>
+    <li>  Scadenza:  <%= @assignment.expiration_date %>  </li>
 
+</ul>
 <% if current_user.id == proprietario %>
 
     Sei il propretario
