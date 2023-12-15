@@ -55,4 +55,13 @@ class Project < ApplicationRecord
 
   end
 
+  def self.manager?(project, user)
+
+    (project.users.distinct.pluck("id").include? user.id) or (user.role == 'admin')
+
+  end
+
+
+
+
 end

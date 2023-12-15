@@ -1,11 +1,5 @@
 class TasksController < ApplicationController
 
-  def manager?
-
-    (@task.project.users.distinct.pluck("id").include? current_user.id) or (@current_user.role == 'admin')
-
-  end
-
   def index
     @tasks = Task.all
   end
@@ -17,9 +11,8 @@ class TasksController < ApplicationController
   def edit
     @task = Task.find(params[:id])
 
-    if not manager?
-      puts("do not manage")
-      redirect_to :controller => "main", :action => 'notauthorized'
+    if not Project.manager?(@task.project, current_user)
+      not_authorized
     end
 
   end
@@ -40,16 +33,13 @@ class TasksController < ApplicationController
 
     @task = Task.find(params[:id])
 
-    if manager?
+    if Project.manager?(@task.project, current_user)
 
       @task.destroy
-
       redirect_to action: "index"
 
     else
-
-      redirect_to :controller => "main", :action => 'notauthorized'
-
+      not_authorized
     end
 
   end
@@ -59,8 +49,8 @@ class TasksController < ApplicationController
 
     @project = Project.find(project_params)
 
-    if not ((@project.users.distinct.pluck("id").include? current_user.id) or (@current_user.role == 'admin'))
-      redirect_to :controller => "main", :action => 'notauthorized'
+    if not Project.manager?(@project, current_user)
+      not_authorized
     end
 
   end
@@ -68,10 +58,9 @@ class TasksController < ApplicationController
   def create
 
     @task = Task.new(task_params)
-    #Da considerare soluzione alternativa
-    if not manager?
-      puts("do not manage")
-      redirect_to :controller => "main", :action => 'notauthorized'
+
+    if not Project.manager?(@task.project, current_user)
+      not_authorized
     else
       if @task.save
         redirect_to @task

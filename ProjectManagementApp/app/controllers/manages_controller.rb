@@ -2,20 +2,9 @@ class ManagesController < ApplicationController
 
   before_action :senior?, only: [:edit, :update, :destroy, :new, :create]
 
-  def manager?
-
-    (@manage.project.users.distinct.pluck("id").include? current_user.id) or (@current_user.role == 'admin')
-
-  end
-
   def index
 
     @manages = Manage.all
-    @id_list = Manage.all.distinct.pluck("project_id")
-
-    @project_list = Project.find(@id_list)
-
-    puts(@project_list)
 
   end
 
@@ -26,10 +15,10 @@ class ManagesController < ApplicationController
   def edit
     @manage = Manage.find(params[:id])
 
-    if not manager?
-      puts("do not manage")
-      redirect_to :controller => "main", :action => 'notauthorized'
+    if not Project.manager?(@manage.project, current_user)
+      not_authorized
     end
+
   end
 
   def update
@@ -65,9 +54,7 @@ class ManagesController < ApplicationController
   def create
     @manage = Manage.new(manage_params)
 
-    puts(@manage.project_id)
-
-    if manager?
+    if Project.manager?(@manage.project, current_user)
       if @manage.save
         redirect_to @manage
       else
@@ -75,7 +62,7 @@ class ManagesController < ApplicationController
         render :new, status: :unprocessable_entity
       end
     else
-      redirect_to :controller => "main", :action => 'notauthorized'
+      not_authorized
     end
 
 

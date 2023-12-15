@@ -3,11 +3,6 @@ class ProjectsController < ApplicationController
   before_action :admin?, only: [:destroy]
   before_action :senior?, only: [:new, :create]
 
-  def manager?
-
-    (@project.users.distinct.pluck("id").include? current_user.id) or (@current_user.role == 'admin')
-
-  end
 
   def index
     @projects = Project.all
@@ -21,9 +16,8 @@ class ProjectsController < ApplicationController
 
     @project = Project.find(params[:id])
 
-    if not manager?
-      puts("do not manage")
-      redirect_to :controller => "main", :action => 'notauthorized'
+    if not Project.manager?(@project, current_user)
+      not_authorized
     end
 
   end

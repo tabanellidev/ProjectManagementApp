@@ -32,4 +32,41 @@ class Assignment < ApplicationRecord
 
   end
 
+  def self.owner(assignment, user)
+
+    (assignment.user.id == user.id || user.role == 'admin')
+
+  end
+
+  def self.complete(assignment)
+
+    assignment.completion_date = Date.today
+
+    if assignment.completion_date <= assignment.expiration_date
+      assignment.status = 'Completed'
+    else
+      assignment.status = 'Delayed'
+    end
+
+    assignment.save
+
+    Task.complete(assignment.task)
+
+  end
+
+  def self.uncomplete(assignment)
+
+    assignment.status = 0
+    assignment.save
+
+  end
+
+  def self.expire(assignment)
+
+    assignment.status = 2
+    assignment.save
+
+  end
+
+
 end

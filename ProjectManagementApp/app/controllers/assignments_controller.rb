@@ -1,11 +1,5 @@
 class AssignmentsController < ApplicationController
 
-  def manager?
-
-    (@assignment.task.project.users.distinct.pluck("id").include? current_user.id) or (@current_user.role == 'admin')
-
-  end
-
   def index
     @assignments = Assignment.all
   end
@@ -17,9 +11,8 @@ class AssignmentsController < ApplicationController
   def edit
     @assignment = Assignment.find(params[:id])
 
-    if not manager?
-      puts("do not manage")
-      redirect_to :controller => "main", :action => 'notauthorized'
+    if not Project.manager?(@assignment.task.project, current_user)
+      not_authorized
     end
 
   end
@@ -40,16 +33,13 @@ class AssignmentsController < ApplicationController
 
     @assignment = Assignment.find(params[:id])
 
-    if manager?
+    if Project.manager?(@assignment.task.project, current_user)
 
       @assignment.destroy
-
       redirect_to action: "index"
 
     else
-
-      redirect_to :controller => "main", :action => 'notauthorized'
-
+      not_authorized
     end
 
   end
@@ -57,25 +47,15 @@ class AssignmentsController < ApplicationController
   def complete
     @assignment = Assignment.find(params[:id])
 
-    if @assignment.user.id == current_user.id || current_user.role == 'admin'
+    if Assignment.owner(@assignment, current_user)
 
-      @assignment.completion_date = Date.today
-
-      if @assignment.completion_date <= @assignment.expiration_date
-        @assignment.status = 'Completed'
-      else
-        @assignment.status = 'Delayed'
-      end
-
-      @assignment.save
-
-      Task.complete(@assignment.task)
+      Assignment.complete(@assignment)
 
       redirect_to @assignment
 
     else
 
-      redirect_to :controller => "main", :action => 'notauthorized'
+      not_authorized
 
     end
 
@@ -85,8 +65,7 @@ class AssignmentsController < ApplicationController
   def uncomplete
     @assignment = Assignment.find(params[:id])
 
-    @assignment.status = 0
-    @assignment.save
+    Assignment.uncomplete(@assignment)
 
     redirect_to @assignment
   end
@@ -94,8 +73,7 @@ class AssignmentsController < ApplicationController
   def expire
     @assignment = Assignment.find(params[:id])
 
-    @assignment.status = 2
-    @assignment.save
+    Assignment.expire(@assignment)
 
     redirect_to @assignment
   end
@@ -107,9 +85,8 @@ class AssignmentsController < ApplicationController
   def create
     @assignment = Assignment.new(assignment_params)
 
-    if not manager?
-      puts("do not manage")
-      redirect_to :controller => "main", :action => 'notauthorized'
+    if not Project.manager?(@assignment.task.project, current_user)
+      not_authorized
     else
 
       if @assignment.save

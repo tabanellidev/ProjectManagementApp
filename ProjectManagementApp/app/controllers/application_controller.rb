@@ -5,7 +5,7 @@ class ApplicationController < ActionController::Base
   def admin?
 
       if current_user.role != 'admin'
-        redirect_to :controller => "main", :action => 'notauthorized'
+       not_authorized
       end
 
   end
@@ -13,13 +13,21 @@ class ApplicationController < ActionController::Base
   def senior?
 
     if current_user.role == 'developer'
-      redirect_to :controller => "main", :action => 'notauthorized'
+      not_authorized
     end
 
   end
 
+  def not_authorized
+    redirect_to :controller => "main", :action => 'notauthorized'
+  end
+
   rescue_from 'ActionController::ParameterMissing' do |exception|
     render json: { error: 'No params provided' }, status: 401
+  end
+
+  rescue_from 'ActiveRecord::RecordNotFound' do |exception|
+    render json: { error: 'Record not found' }, status: 404
   end
 
 end
