@@ -1,1 +1,16 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+manage_one:
+  id: 0
+  user_id: 3
+  project_id: 0
+
+manage_two:
+  id: 1
+  user_id: 4
+  project_id: 0
+
+manage_three:
+  id: 2
+  user_id: 0
+  project_id: 0
