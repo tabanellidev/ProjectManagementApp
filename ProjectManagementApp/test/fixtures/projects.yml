@@ -11,3 +11,17 @@ project_one:
   description: Test description
   start_date: DateTime.new(2023,1,1)
   expiration_date: DateTime.new(2023,1,31)
+
+project_two:
+  id: 1
+  title: Test title
+  description: Test description
+  start_date: DateTime.new(2023,1,1)
+  expiration_date: DateTime.new(2023,1,31)
+
+project_three:
+  id: 2
+  title: Test title
+  description: Test description
+  start_date: DateTime.new(2023,1,1)
+  expiration_date: DateTime.new(2023,1,31)

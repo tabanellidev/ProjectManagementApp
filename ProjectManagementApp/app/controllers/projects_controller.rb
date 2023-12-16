@@ -26,10 +26,16 @@ class ProjectsController < ApplicationController
 
     @project = Project.find(params[:id])
 
-    if @project.update(project_params)
-      redirect_to @project
+    if not Project.manager?(@project, current_user)
+      not_authorized
     else
-      render :edit, status: :unprocessable_entity
+
+      if @project.update(project_params)
+        redirect_to @project
+      else
+        render :edit, status: :unprocessable_entity
+      end
+
     end
 
   end

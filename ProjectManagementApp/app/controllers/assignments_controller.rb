@@ -21,10 +21,17 @@ class AssignmentsController < ApplicationController
 
     @assignment = Assignment.find(params[:id])
 
-    if @assignment.update(assignment_params)
-      redirect_to @assignment
+    if not Project.manager?(@assignment.task.project, current_user)
+      not_authorized
+
     else
-      render :edit, status: :unprocessable_entity
+
+      if @assignment.update(assignment_params)
+        redirect_to @assignment
+      else
+        render :edit, status: :unprocessable_entity
+      end
+
     end
 
   end
@@ -80,6 +87,13 @@ class AssignmentsController < ApplicationController
 
   def new
     @assignment = Assignment.new
+
+    @task = Task.find(task_params)
+
+    if not Project.manager?(@task.project, current_user)
+      not_authorized
+    end
+
   end
 
   def create
@@ -100,8 +114,13 @@ class AssignmentsController < ApplicationController
   end
 
   private
-  def assignment_params
-    params.require(:assignment).permit(:title, :description, :start_date, :expiration_date, :user_id, :task_id)
-  end
+    def assignment_params
+      params.require(:assignment).permit(:title, :description, :start_date, :expiration_date, :user_id, :task_id)
+    end
+
+  private
+    def task_params
+      params.require(:task_id)
+    end
 
 end

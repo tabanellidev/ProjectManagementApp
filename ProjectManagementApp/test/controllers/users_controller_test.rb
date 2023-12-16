@@ -1,12 +1,10 @@
 require "test_helper"
 
 class UsersControllerTest < ActionDispatch::IntegrationTest
-  setup do
-    sign_in users(:user_one)
+
+  test "Not logged" do
+    get projects_url
+    assert_response :redirect
   end
 
-  test "should get index" do
-    get users_url
-    assert_response :success
-  end
 end

@@ -78,7 +78,7 @@ Task.create([{
   project_id: 2,
   status: 0,
   start_date: DateTime.new(2023,12,1),
-  expiration_date: DateTime.new(2023,12,5),
+  expiration_date: DateTime.new(2023,12,5)
 },
 {
   title: "Serving",
@@ -86,7 +86,7 @@ Task.create([{
   project_id: 2,
   status: 0,
   start_date: DateTime.new(2023,12,1),
-  expiration_date: DateTime.new(2023,12,5),
+  expiration_date: DateTime.new(2023,12,5)
 }
 ])
 

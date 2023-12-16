@@ -5,6 +5,7 @@ FROM ruby:3.0.2 AS ProjectManagementApp
 RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg -o /root/yarn-pubkey.gpg && apt-key add /root/yarn-pubkey.gpg
 RUN echo "deb https://dl.yarnpkg.com/debian/ stable main" > /etc/apt/sources.list.d/yarn.list
 RUN apt-get update && apt-get install -y --no-install-recommends nodejs yarn
+RUN apt-get update && apt-get -y install cron
 
 # Default directory
 # path container
@@ -22,6 +23,13 @@ RUN yarn install
 #RUN cd ProjectManagementApp
 
 EXPOSE 3000
+
+#Start cronjob
+RUN bundle exec whenever 
+
+RUN whenever --update-crontab --set environment='development'
+
+RUN crontab -l
 
 # Start server
 CMD ["rails", "server", "-b", "0.0.0.0"]

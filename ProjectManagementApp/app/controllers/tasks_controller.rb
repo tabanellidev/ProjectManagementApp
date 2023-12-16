@@ -21,10 +21,14 @@ class TasksController < ApplicationController
 
     @task = Task.find(params[:id])
 
-    if @task.update(task_params)
-      redirect_to @task
+    if not Project.manager?(@task.project, current_user)
+      not_authorized
     else
-      render :edit, status: :unprocessable_entity
+      if @task.update(task_params)
+        redirect_to @task
+      else
+        render :edit, status: :unprocessable_entity
+      end
     end
 
   end
@@ -76,7 +80,7 @@ class TasksController < ApplicationController
     def task_params
       params.require(:task).permit(:title, :description, :start_date, :expiration_date, :project_id)
     end
-
+  private
     def project_params
       params.require(:project_id)
     end

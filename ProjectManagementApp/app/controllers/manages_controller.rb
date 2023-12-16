@@ -25,10 +25,16 @@ class ManagesController < ApplicationController
 
     @manage = Manage.find(params[:id])
 
-    if @manage.update(manage_params)
-      redirect_to @manage
+    if not Project.manager?(@manage.project, current_user)
+      not_authorized
     else
-      render :edit, status: :unprocessable_entity
+
+      if @manage.update(manage_params)
+        redirect_to @manage
+      else
+        render :edit, status: :unprocessable_entity
+      end
+
     end
 
   end
@@ -37,11 +43,11 @@ class ManagesController < ApplicationController
 
     @manage = Manage.find(params[:id])
 
-    if manager?
+    if not Project.manager?(@manage.project, current_user)
+      not_authorized
+    else
       @manage.destroy
       redirect_to action: "index"
-    else
-      redirect_to :controller => "main", :action => 'notauthorized'
     end
 
   end
@@ -49,12 +55,21 @@ class ManagesController < ApplicationController
 
   def new
     @manage = Manage.new
+
+    @project = Project.find(project_params)
+
+    if not Project.manager?(@project, current_user)
+      not_authorized
+    end
+
   end
 
   def create
     @manage = Manage.new(manage_params)
 
-    if Project.manager?(@manage.project, current_user)
+    @project = Project.find(@manage.project_id)
+
+    if Project.manager?(@project, current_user)
       if @manage.save
         redirect_to @manage
       else
@@ -72,5 +87,10 @@ class ManagesController < ApplicationController
   def manage_params
     params.require(:manage).permit(:user_id, :project_id)
   end
+
+  private
+    def project_params
+      params.require(:project_id)
+    end
 
 end
