@@ -6,12 +6,23 @@ class Task < ApplicationRecord
   validates :start_date, presence: true
   validates :expiration_date, presence: true
 
+  validate :end_date_after_start_date
+
   belongs_to :project, class_name: 'Project', foreign_key: 'project_id'
 
   enum status: [:Uncompleted, :Completed, :Expired, :Delayed]
 
   has_many :assignments
   has_many :users, through: :assignments
+
+  def end_date_after_start_date
+    return if expiration_date.blank? || start_date.blank?
+
+    if expiration_date < start_date
+      errors.add(:expiration_date, "must be after the start date")
+    end
+
+ end
 
   def self.complete(task)
 

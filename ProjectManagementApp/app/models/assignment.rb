@@ -6,12 +6,22 @@ class Assignment < ApplicationRecord
   validates :start_date, presence: true
   validates :expiration_date, presence: true
 
+  validate :end_date_after_start_date
 
   enum status: [:Uncompleted, :Completed, :Expired, :Delayed]
 
   belongs_to :user, optional: true
   belongs_to :task
 
+
+  def end_date_after_start_date
+    return if expiration_date.blank? || start_date.blank?
+
+    if expiration_date < start_date
+      errors.add(:expiration_date, "must be after the start date")
+    end
+
+ end
 
   def self.expired
 

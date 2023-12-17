@@ -12,6 +12,8 @@ Rails.application.routes.draw do
   resources :assignments
   resources :manages
 
+  post 'users', to: "users#create"
+
   devise_for :users
   resources :users
 

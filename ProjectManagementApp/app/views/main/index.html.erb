@@ -22,3 +22,43 @@
         <%= link_to "Sign Up", new_user_registration_path %>
         <%= link_to "Login", new_user_session_path %>
 <%  end %>
+
+<% if current_user %>
+<br><br>
+Id: <%= current_user.id%>
+
+Compiti associati: 
+
+<ul>
+  <% current_user.assignments.each do |assignment| %>
+    <% if not assignment.status? %>
+        <li>
+            <%= assignment.title %> <%= button_to "Info", assignment_path(assignment.id), method: :get%>
+        </li>
+    <% end %>
+  <% end %>
+</ul>
+
+Compiti completati: 
+
+<ul>
+  <% current_user.assignments.each do |assignment| %>
+    <% if assignment.status? %>
+        <li>
+            <%= assignment.title %> <%= button_to "Info", assignment_path(assignment.id), method: :get%>
+        </li>
+    <% end %>
+  <% end %>
+</ul>
+
+Task associati: 
+
+<ul>
+  <% current_user.tasks.uniq.each do |task| %>
+    <li>
+      <%= task.title %> <%= button_to "Info", task_path(task.id), method: :get%>
+    </li>
+  <% end %>
+
+</ul>
+<%  end %>
