@@ -12,4 +12,6 @@ class User < ApplicationRecord
   has_many :manages
   has_many :projects, through: :manages
 
+  has_many :notifications, as: :recipient
+
 end

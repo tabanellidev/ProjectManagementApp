@@ -46,6 +46,7 @@ gem "devise"
 
 gem "whenever"
 
+gem "noticed"
 # Use Sass to process CSS
 # gem "sassc-rails"
 

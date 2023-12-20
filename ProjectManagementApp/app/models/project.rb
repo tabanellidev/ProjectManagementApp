@@ -14,6 +14,33 @@ class Project < ApplicationRecord
   has_many :manages
   has_many :users, through: :manages
 
+  has_noticed_notifications
+
+  def self.project_notice(project,type)
+
+    targets = managers(project)
+
+    if type == 2
+      project = project.as_json
+      project["type"] = "Edit"
+      project["object"] = "Project"
+    end
+
+    if type == 4
+      project = project.as_json
+      project["type"] = "Complete"
+      project["object"] = "Project"
+    end
+
+    if type == 5
+      project = project.as_json
+      project["type"] = "Expired"
+      project["object"] = "Project"
+    end
+
+    ProjectNotification.with(project).deliver_later(User.find(targets))
+  end
+
   def end_date_after_start_date
     return if expiration_date.blank? || start_date.blank?
 
@@ -21,7 +48,7 @@ class Project < ApplicationRecord
       errors.add(:expiration_date, "must be after the start date")
     end
 
- end
+  end
 
 
   def self.complete(project)
@@ -39,6 +66,7 @@ class Project < ApplicationRecord
     if project_completed
       if Date.today <= project.expiration_date
         project.status = 'Completed'
+        Project.project_notice(@project,4)
       else
         project.status = 'Delayed'
       end
@@ -58,6 +86,7 @@ class Project < ApplicationRecord
       if project.status == 'Uncompleted'
         if Date.today > project.expiration_date
           project.status = 'Expired'
+          Project.project_notice(@project,5)
           project.save
         end
       end
@@ -68,12 +97,34 @@ class Project < ApplicationRecord
   end
 
   def self.manager?(project, user)
-
     (project.users.distinct.pluck("id").include? user.id) or (user.role == 'admin')
-
   end
 
 
+  def self.managers(project)
+    project.users.distinct.pluck("id")
+  end
+
+  def self.set_complete(project)
+
+    project.status = "Completed"
+    project.save
+
+  end
+
+  def self.set_expire(project)
+
+    project.status = "Expired"
+    project.save
+
+  end
+
+  def self.set_uncomplete(project)
+
+    project.status = "Uncompleted"
+    project.save
+
+  end
 
 
 end

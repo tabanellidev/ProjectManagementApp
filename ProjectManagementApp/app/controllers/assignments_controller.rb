@@ -15,6 +15,8 @@ class AssignmentsController < ApplicationController
       not_authorized
     end
 
+    Assignment.assignment_notice(@assignment, @assignment.user,3)
+
   end
 
   def update
@@ -61,11 +63,8 @@ class AssignmentsController < ApplicationController
       redirect_to @assignment
 
     else
-
       not_authorized
-
     end
-
 
   end
 
@@ -104,6 +103,9 @@ class AssignmentsController < ApplicationController
     else
 
       if @assignment.save
+
+        Assignment.assignment_notice(@assignment, @assignment.user,4)
+
         redirect_to @assignment
       else
         params[:task_id] = @assignment.task_id

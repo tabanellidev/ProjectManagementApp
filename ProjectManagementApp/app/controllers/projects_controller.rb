@@ -4,6 +4,7 @@ class ProjectsController < ApplicationController
   before_action :senior?, only: [:new, :create]
 
 
+
   def index
     @projects = Project.all
   end
@@ -31,6 +32,9 @@ class ProjectsController < ApplicationController
     else
 
       if @project.update(project_params)
+
+        Project.project_notice(@project,2)
+
         redirect_to @project
       else
         render :edit, status: :unprocessable_entity
@@ -67,6 +71,34 @@ class ProjectsController < ApplicationController
     end
 
   end
+
+  def complete
+    @project = Project.find(params[:id])
+
+    Project.set_complete(@project)
+    Project.project_notice(@project,4)
+
+    redirect_to @project
+
+  end
+
+  def uncomplete
+    @project = Project.find(params[:id])
+
+    Project.set_uncomplete(@project)
+
+    redirect_to @project
+  end
+
+  def expire
+    @project = Project.find(params[:id])
+
+    Project.set_expire(@project)
+    Project.project_notice(@project,5)
+
+    redirect_to @project
+  end
+
 
   private
     def project_params

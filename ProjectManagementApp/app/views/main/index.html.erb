@@ -27,6 +27,14 @@
 <br><br>
 Id: <%= current_user.id%>
 
+<% if current_user %>
+  <div class="col-4">
+      <%= turbo_frame_tag "notifications" do %>
+        <%= render "notifications/notifications", user: current_user %>
+      <% end %>
+    </div>
+<% end %>
+
 Compiti associati: 
 
 <ul>
@@ -62,3 +70,5 @@ Task associati:
 
 </ul>
 <%  end %>
+
+

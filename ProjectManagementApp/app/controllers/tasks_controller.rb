@@ -25,6 +25,9 @@ class TasksController < ApplicationController
       not_authorized
     else
       if @task.update(task_params)
+
+        Task.task_notice(@task,3)
+
         redirect_to @task
       else
         render :edit, status: :unprocessable_entity
@@ -74,6 +77,31 @@ class TasksController < ApplicationController
       end
     end
 
+  end
+
+  def complete
+    @task = Task.find(params[:id])
+
+    Task.set_complete(@task)
+
+    redirect_to @task
+
+  end
+
+  def uncomplete
+    @task = Task.find(params[:id])
+
+    Task.set_uncomplete(@task)
+
+    redirect_to @task
+  end
+
+  def expire
+    @task = Task.find(params[:id])
+
+    Task.set_expire(@task)
+
+    redirect_to @task
   end
 
   private

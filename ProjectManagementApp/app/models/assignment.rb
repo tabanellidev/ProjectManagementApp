@@ -13,6 +13,24 @@ class Assignment < ApplicationRecord
   belongs_to :user, optional: true
   belongs_to :task
 
+  has_noticed_notifications
+
+  def self.assignment_notice(assignment,user,type)
+
+    if type == 4
+      assignment = assignment.as_json
+      assignment["type"] = "Assign"
+      assignment["object"] = "Assignment"
+    end
+
+    if type == 3
+      assignment = assignment.as_json
+      assignment["type"] = "Edit"
+      assignment["object"] = "Assignment"
+    end
+
+    ProjectNotification.with(assignment).deliver_later(user)
+  end
 
   def end_date_after_start_date
     return if expiration_date.blank? || start_date.blank?

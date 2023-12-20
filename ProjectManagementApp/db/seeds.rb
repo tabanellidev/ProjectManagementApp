@@ -49,7 +49,7 @@ Project.create([{
   title: "Creazione modello ML",
   description: "L'obiettivo è creare un sito di e-commerce per il cliente",
   start_date: DateTime.new(2023,12,1),
-  expiration_date: DateTime.new(2023,11,15),
+  expiration_date: DateTime.new(2023,12,15),
   completion_date: DateTime.new(2023,12,5)
 }
 ])

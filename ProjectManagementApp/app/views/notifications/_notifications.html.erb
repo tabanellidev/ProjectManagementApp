@@ -1,0 +1,16 @@
+<% if current_user %>
+  <div class="container">
+    <h6>Notifications</h6>
+    <%= turbo_stream_from "notifications_#{user.id}" %>
+    <%= turbo_frame_tag "notifications_#{user.id}" do %>
+      <% @notifications.each do |notification| %>
+
+        Il <%= notification.to_notification.object %> "<%= notification.to_notification.title %>"  
+            è stato <%= notification.to_notification.operation %> <bR>
+
+
+        
+      <% end %>
+    <% end %>
+  </div>
+<% end %>
