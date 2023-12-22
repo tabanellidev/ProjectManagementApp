@@ -5,15 +5,17 @@ Rails.application.routes.draw do
   get 'assignments/:id/complete', to: "assignments#complete" #per testing
   get 'assignments/:id/uncomplete', to: "assignments#uncomplete" #per testing
   get 'assignments/:id/expire', to: "assignments#expire" #per testing
+  get 'assignments/:id/delay', to: "assignments#delay" #per testing
 
   get 'tasks/:id/complete', to: "tasks#complete" #per testing
   get 'tasks/:id/uncomplete', to: "tasks#uncomplete" #per testing
   get 'tasks/:id/expire', to: "tasks#expire" #per testing
+  get 'tasks/:id/delay', to: "tasks#delay" #per testing
 
   get 'projects/:id/complete', to: "projects#complete" #per testing
   get 'projects/:id/uncomplete', to: "projects#uncomplete" #per testing
   get 'projects/:id/expire', to: "projects#expire" #per testing
-
+  get 'projects/:id/delay', to: "projects#delay" #per testing
 
   resources :projects
   resources :tasks

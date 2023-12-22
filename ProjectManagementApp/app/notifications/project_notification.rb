@@ -39,17 +39,33 @@ class ProjectNotification < Noticed::Base
 
   def operation
     if self.params["type"] == "Edit"
-      return "modificato"
+      return "stato modificato"
     end
     if self.params["type"] == "Assigned"
-      return "assegnato"
+      return "stato assegnato a te"
     end
-    if self.params["type"] == "Complete"
-      return "completato"
+    if self.params["type"] == "Deallocated"
+      return "stato rimosso dalle tue mansioni"
+    end
+    if self.params["type"] == "Completed"
+      return "stato completato"
     end
     if self.params["type"] == "Expired"
       return "scaduto"
     end
+    if self.params["type"] == "Soon Expired"
+      return "in scadenza"
+    end
+    if self.params["type"] == "Delayed"
+      return "stato completato ma è in ritardo"
+    end
+    if self.params["type"] == "Created"
+      return "stato creato"
+    end
+    if self.params["type"] == "Deleted"
+      return "stato eliminato"
+    end
+
   end
 
   #

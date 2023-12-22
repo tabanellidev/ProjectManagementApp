@@ -1,5 +1,11 @@
 class AssignmentsController < ApplicationController
 
+  after_action only: [:create] do Assignment.create_and_assign_notification(@assignment) end
+  after_action only: [:expire] do Assignment.assignment_notice(@assignment,'Expired') end
+  after_action only: [:delay] do Assignment.assignment_notice(@assignment,'Delayed') end
+  after_action only: [:update] do Assignment.deallocate_and_assign(@assignment, @old_id) end
+  after_action only: [:destroy] do Assignment.assignment_notice(@assignment,'Destroyed') end
+
   def index
     @assignments = Assignment.all
   end
@@ -15,19 +21,17 @@ class AssignmentsController < ApplicationController
       not_authorized
     end
 
-    Assignment.assignment_notice(@assignment, @assignment.user,3)
-
   end
 
   def update
 
     @assignment = Assignment.find(params[:id])
+    @old_id = @assignment.user_id
 
     if not Project.manager?(@assignment.task.project, current_user)
       not_authorized
 
     else
-
       if @assignment.update(assignment_params)
         redirect_to @assignment
       else
@@ -53,37 +57,6 @@ class AssignmentsController < ApplicationController
 
   end
 
-  def complete
-    @assignment = Assignment.find(params[:id])
-
-    if Assignment.owner(@assignment, current_user)
-
-      Assignment.complete(@assignment)
-
-      redirect_to @assignment
-
-    else
-      not_authorized
-    end
-
-  end
-
-  def uncomplete
-    @assignment = Assignment.find(params[:id])
-
-    Assignment.uncomplete(@assignment)
-
-    redirect_to @assignment
-  end
-
-  def expire
-    @assignment = Assignment.find(params[:id])
-
-    Assignment.expire(@assignment)
-
-    redirect_to @assignment
-  end
-
   def new
     @assignment = Assignment.new
 
@@ -104,8 +77,6 @@ class AssignmentsController < ApplicationController
 
       if @assignment.save
 
-        Assignment.assignment_notice(@assignment, @assignment.user,4)
-
         redirect_to @assignment
       else
         params[:task_id] = @assignment.task_id
@@ -113,6 +84,49 @@ class AssignmentsController < ApplicationController
       end
 
     end
+  end
+
+  def complete
+    @assignment = Assignment.find(params[:id])
+
+    puts("test")
+
+    if Assignment.owner(@assignment, current_user)
+
+      puts("test")
+
+      Assignment.complete(@assignment)
+
+      redirect_to @assignment
+
+    else
+      not_authorized
+    end
+
+  end
+
+  def uncomplete
+    @assignment = Assignment.find(params[:id])
+
+    Assignment.set_uncomplete(@assignment)
+
+    redirect_to @assignment
+  end
+
+  def expire
+    @assignment = Assignment.find(params[:id])
+
+    Assignment.set_expire(@assignment)
+
+    redirect_to @assignment
+  end
+
+  def delay
+    @assignment = Assignment.find(params[:id])
+
+    Assignment.set_delay(@assignment)
+
+    redirect_to @assignment
   end
 
   private

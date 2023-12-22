@@ -1,5 +1,13 @@
 class TasksController < ApplicationController
 
+  before_action :admin?, only: [:complete, :delay, :expire, :uncomplete]
+
+  #Notifiche
+  after_action only: [:complete] do Task.task_notice(@task,'Completed') end
+  after_action only: [:expire] do Task.task_notice(@task,'Expired') end
+  after_action only: [:delay] do Task.task_notice(@task,'Delayed') end
+
+
   def index
     @tasks = Task.all
   end
@@ -25,9 +33,7 @@ class TasksController < ApplicationController
       not_authorized
     else
       if @task.update(task_params)
-
-        Task.task_notice(@task,3)
-
+        Task.task_notice(@task,'Edit')
         redirect_to @task
       else
         render :edit, status: :unprocessable_entity
@@ -41,8 +47,8 @@ class TasksController < ApplicationController
     @task = Task.find(params[:id])
 
     if Project.manager?(@task.project, current_user)
-
       @task.destroy
+      Task.task_notice(@task,'Deleted')
       redirect_to action: "index"
 
     else
@@ -70,6 +76,7 @@ class TasksController < ApplicationController
       not_authorized
     else
       if @task.save
+        Task.task_notice(@task,'Created')
         redirect_to @task
       else
         params[:project_id] = @task.project_id
@@ -100,6 +107,14 @@ class TasksController < ApplicationController
     @task = Task.find(params[:id])
 
     Task.set_expire(@task)
+
+    redirect_to @task
+  end
+
+  def delay
+    @task = Task.find(params[:id])
+
+    Task.set_delay(@task)
 
     redirect_to @task
   end

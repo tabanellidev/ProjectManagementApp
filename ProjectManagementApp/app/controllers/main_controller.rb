@@ -5,8 +5,9 @@ class MainController < ApplicationController
     def index
 
         if current_user
-            current_user.notifications.mark_as_read!
+
             @notifications = current_user.notifications.reverse
+            current_user.notifications.mark_as_read!
 
         end
 

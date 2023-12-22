@@ -20,21 +20,33 @@ class Project < ApplicationRecord
 
     targets = managers(project)
 
-    if type == 2
+    if type == 'Edit'
       project = project.as_json
       project["type"] = "Edit"
       project["object"] = "Project"
     end
 
-    if type == 4
+    if type == 'Completed'
       project = project.as_json
-      project["type"] = "Complete"
+      project["type"] = "Completed"
       project["object"] = "Project"
     end
 
-    if type == 5
+    if type == 'Soon Expired'
+      project = project.as_json
+      project["type"] = "Soon Expired"
+      project["object"] = "Project"
+    end
+
+    if type == 'Expired'
       project = project.as_json
       project["type"] = "Expired"
+      project["object"] = "Project"
+    end
+
+    if type == 'Delayed'
+      project = project.as_json
+      project["type"] = "Delayed"
       project["object"] = "Project"
     end
 
@@ -66,9 +78,10 @@ class Project < ApplicationRecord
     if project_completed
       if Date.today <= project.expiration_date
         project.status = 'Completed'
-        Project.project_notice(@project,4)
+        Project.project_notice(project,'Completed')
       else
         project.status = 'Delayed'
+        Project.project_notice(project,'Delayed')
       end
 
       project.save
@@ -84,9 +97,12 @@ class Project < ApplicationRecord
 
     @projects.each do |project|
       if project.status == 'Uncompleted'
+        if (project.expiration_date - Date.today) == 7
+          Project.project_notice(project,"Soon Expired")
+        end
         if Date.today > project.expiration_date
           project.status = 'Expired'
-          Project.project_notice(@project,5)
+          Project.project_notice(project,'Expired')
           project.save
         end
       end
@@ -115,6 +131,13 @@ class Project < ApplicationRecord
   def self.set_expire(project)
 
     project.status = "Expired"
+    project.save
+
+  end
+
+  def self.set_delay(project)
+
+    project.status = "Delayed"
     project.save
 
   end

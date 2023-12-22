@@ -15,21 +15,79 @@ class Assignment < ApplicationRecord
 
   has_noticed_notifications
 
-  def self.assignment_notice(assignment,user,type)
+  def self.assignment_notice(assignment,type)
 
-    if type == 4
+    if type == 'Assigned'
+      targets = assignment.user_id
+
       assignment = assignment.as_json
-      assignment["type"] = "Assign"
+      assignment["type"] = "Assigned"
       assignment["object"] = "Assignment"
     end
+    if type == 'Deallocated'
+      targets = assignment.user_id
 
-    if type == 3
+      assignment = assignment.as_json
+      assignment["type"] = "Deallocated"
+      assignment["object"] = "Assignment"
+    end
+    if type == 'Edit'
+      targets = Project.managers(assignment.task.project)
+
       assignment = assignment.as_json
       assignment["type"] = "Edit"
       assignment["object"] = "Assignment"
     end
+    if type == 'Created'
+      targets = Project.managers(assignment.task.project)
 
-    ProjectNotification.with(assignment).deliver_later(user)
+      assignment = assignment.as_json
+      assignment["type"] = "Created"
+      assignment["object"] = "Assignment"
+    end
+    if type == 'Completed'
+      targets = Project.managers(assignment.task.project)
+
+      assignment = assignment.as_json
+      assignment["type"] = "Completed"
+      assignment["object"] = "Assignment"
+    end
+    if type == 'Soon Expired'
+      targets = Project.managers(assignment.task.project)
+      targets.append(assignment.user.id)
+      targets = targets.uniq
+
+      assignment = assignment.as_json
+      assignment["type"] = "Soon Expired"
+      assignment["object"] = "Assignment"
+    end
+    if type == 'Expired'
+      targets = Project.managers(assignment.task.project)
+      targets.append(assignment.user.id)
+      targets = targets.uniq
+
+      assignment = assignment.as_json
+      assignment["type"] = "Expired"
+      assignment["object"] = "Assignment"
+    end
+    if type == 'Delayed'
+      targets = Project.managers(assignment.task.project)
+
+      assignment = assignment.as_json
+      assignment["type"] = "Delayed"
+      assignment["object"] = "Assignment"
+    end
+    if type == 'Deleted'
+      targets = Project.managers(assignment.task.project)
+      targets.append(assignment.user.id)
+      targets = targets.uniq
+
+      assignment = assignment.as_json
+      assignment["type"] = "Deleted"
+      assignment["object"] = "Assignment"
+    end
+
+    ProjectNotification.with(assignment).deliver_later(User.find(targets))
   end
 
   def end_date_after_start_date
@@ -49,6 +107,9 @@ class Assignment < ApplicationRecord
 
     @assignment.each do |assignment|
       if assignment.status == 'Uncompleted'
+        if (assignment.expiration_date - Date.today) == 7
+          Assignemnt.assignment_notice(assignment,"Soon Expired")
+        end
         if Date.today > assignment.expiration_date
          assignment.status = 'Expired'
          assignment.save
@@ -72,8 +133,10 @@ class Assignment < ApplicationRecord
 
     if assignment.completion_date <= assignment.expiration_date
       assignment.status = 'Completed'
+      Assignment.assignment_notice(assignment,'Completed')
     else
       assignment.status = 'Delayed'
+      Assignment.assignment_notice(assignment,'Delayed')
     end
 
     assignment.save
@@ -82,19 +145,66 @@ class Assignment < ApplicationRecord
 
   end
 
-  def self.uncomplete(assignment)
+  def self.set_expire(assignment)
 
-    assignment.status = 0
+    assignment.status = "Expired"
     assignment.save
 
   end
 
-  def self.expire(assignment)
+  def self.set_uncomplete(assignment)
 
-    assignment.status = 2
+    assignment.status = "Uncompleted"
     assignment.save
 
   end
 
+  def self.set_delay(assignment)
+
+    assignment.status = "Delayed"
+    assignment.save
+
+  end
+
+  def self.create_and_assign_notification(assignment)
+    Assignment.assignment_notice(assignment,'Created')
+
+    if Assignment.not_user_zero(assignment)
+       Assignment.assignment_notice(assignment,'Assigned')
+    end
+  end
+
+  def self.deallocate_and_assign(assignment, old_id)
+
+    if old_id == assignment.user_id
+      Assignment.assignment_notice(assignment, 'Edit')
+    else
+
+      if Assignment.not_user_zero(assignment)
+        Assignment.assignment_notice(assignment,'Assigned')
+      end
+
+      if old_id != 0
+        @old_assignment = assignment
+        @old_assignment.user_id = old_id
+        Assignment.assignment_notice(@old_assignment,'Deallocated')
+      end
+
+    end
+
+  end
+
+  def self.not_user_zero(assignment)
+    assignment.user_id != 0
+  end
+
+  #??
+  def self.manager?(id, current_user)
+
+    assignment = Assignment.find(id)
+
+    Project.manager?(assignment.task.project, current_user)
+
+  end
 
 end

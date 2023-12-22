@@ -1,9 +1,12 @@
 class ProjectsController < ApplicationController
 
-  before_action :admin?, only: [:destroy]
+  before_action :admin?, only: [:destroy, :complete, :delay, :expire, :uncomplete]
   before_action :senior?, only: [:new, :create]
 
-
+  #Notifiche
+  after_action only: [:complete] do Project.project_notice(@project, "Completed") end
+  after_action only: [:expire] do  Project.project_notice(@project,'Expired') end
+  after_action only: [:delay] do  Project.project_notice(@project,'Delayed') end
 
   def index
     @projects = Project.all
@@ -33,7 +36,7 @@ class ProjectsController < ApplicationController
 
       if @project.update(project_params)
 
-        Project.project_notice(@project,2)
+        Project.project_notice(@project,'Edit')
 
         redirect_to @project
       else
@@ -76,7 +79,6 @@ class ProjectsController < ApplicationController
     @project = Project.find(params[:id])
 
     Project.set_complete(@project)
-    Project.project_notice(@project,4)
 
     redirect_to @project
 
@@ -94,11 +96,17 @@ class ProjectsController < ApplicationController
     @project = Project.find(params[:id])
 
     Project.set_expire(@project)
-    Project.project_notice(@project,5)
 
     redirect_to @project
   end
 
+  def delay
+    @project = Project.find(params[:id])
+
+    Project.set_delay(@project)
+
+    redirect_to @project
+  end
 
   private
     def project_params

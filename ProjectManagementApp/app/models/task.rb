@@ -19,13 +19,61 @@ class Task < ApplicationRecord
 
   def self.task_notice(task,type)
 
-    if type == 3
+    if type == 'Created'
+      targets = Project.managers(task.project)
+
+      task_to_send = task.as_json
+      task_to_send["type"] = "Created"
+      task_to_send["object"] = "Task"
+    end
+    if type == 'Deleted'
+      targets = Project.managers(task.project)
+
+      task_to_send = task.as_json
+      task_to_send["type"] = "Deleted"
+      task_to_send["object"] = "Task"
+    end
+    if type == 'Edit'
+      targets = task_group(task)
+      targets.append(Project.managers(task.project))
+      targets = targets.uniq
+
       task_to_send = task.as_json
       task_to_send["type"] = "Edit"
       task_to_send["object"] = "Task"
     end
+    if type == 'Completed'
+      targets = task_group(task)
+      targets.append(Project.managers(task.project))
+      targets = targets.uniq
 
-    ProjectNotification.with(task_to_send).deliver_later(task_group(task))
+      task_to_send = task.as_json
+      task_to_send["type"] = "Completed"
+      task_to_send["object"] = "Task"
+    end
+    if type == 'Soon Expired'
+      targets = Project.managers(task.project)
+
+      task_to_send = task.as_json
+      task_to_send["type"] = "Soon Expired"
+      task_to_send["object"] = "Task"
+    end
+    if type == 'Expired'
+      targets = Project.managers(task.project)
+
+      task_to_send = task.as_json
+      task_to_send["type"] = "Expired"
+      task_to_send["object"] = "Task"
+    end
+    if type == 'Delayed'
+      targets = Project.managers(task.project)
+
+      task_to_send = task.as_json
+      task_to_send["type"] = "Delayed"
+      task_to_send["object"] = "Task"
+    end
+
+    ProjectNotification.with(task_to_send).deliver_later(User.find(targets))
   end
 
   def end_date_after_start_date
@@ -52,8 +100,10 @@ class Task < ApplicationRecord
     if task_completed
       if Date.today <= task.expiration_date
         task.status = 'Completed'
+        Task.task_notice(task,'Completed')
       else
         task.status = 'Delayed'
+        Task.task_notice(task,'Delayed')
       end
       task.save
 
@@ -71,8 +121,12 @@ class Task < ApplicationRecord
 
     @tasks.each do |task|
       if task.status == 'Uncompleted'
+        if (task.expiration_date - Date.today) == 7
+          Task.task_notice(task,"Soon Expired")
+        end
         if Date.today > task.expiration_date
           task.status = 'Expired'
+          Task.task_notice(task,'Expired')
           task.save
         end
       end
@@ -103,10 +157,16 @@ class Task < ApplicationRecord
 
   end
 
+  def self.set_delay(task)
+
+    task.status = "Delayed"
+    task.save
+
+  end
+
   def self.task_group(task)
 
-    ids = task.assignments.group(:user_id).pluck("id")
-    users = User.find(id)
+    ids = task.assignments.group(:user_id).pluck("user_id")
 
   end
 
