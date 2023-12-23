@@ -18,6 +18,14 @@
   </div>
 
   <div>
+    <%= form.label :client %><br>
+    <%= form.text_field  :client %>
+    <% @project.errors.full_messages_for(:client).each do |message| %>
+      <div><%= message %></div>
+    <% end %>
+  </div>
+
+  <div>
     <%= form.label :start_date %><br>
     <%= form.date_field :start_date, value: Date.today %> 
     <% @project.errors.full_messages_for(:start_date).each do |message| %>

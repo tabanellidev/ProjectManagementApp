@@ -1,10 +1,9 @@
 class AssignmentsController < ApplicationController
 
-  after_action only: [:create] do Assignment.create_and_assign_notification(@assignment) end
+  before_action :admin?, only: [:expire, :delay]
+
   after_action only: [:expire] do Assignment.assignment_notice(@assignment,'Expired') end
   after_action only: [:delay] do Assignment.assignment_notice(@assignment,'Delayed') end
-  after_action only: [:update] do Assignment.deallocate_and_assign(@assignment, @old_id) end
-  after_action only: [:destroy] do Assignment.assignment_notice(@assignment,'Destroyed') end
 
   def index
     @assignments = Assignment.all
@@ -33,6 +32,7 @@ class AssignmentsController < ApplicationController
 
     else
       if @assignment.update(assignment_params)
+        Assignment.deallocate_and_assign(@assignment, @old_id)
         redirect_to @assignment
       else
         render :edit, status: :unprocessable_entity
@@ -47,8 +47,8 @@ class AssignmentsController < ApplicationController
     @assignment = Assignment.find(params[:id])
 
     if Project.manager?(@assignment.task.project, current_user)
-
       @assignment.destroy
+      Assignment.assignment_notice(@assignment,'Destroyed')
       redirect_to action: "index"
 
     else
@@ -76,7 +76,7 @@ class AssignmentsController < ApplicationController
     else
 
       if @assignment.save
-
+        Assignment.create_and_assign_notification(@assignment)
         redirect_to @assignment
       else
         params[:task_id] = @assignment.task_id
@@ -89,11 +89,8 @@ class AssignmentsController < ApplicationController
   def complete
     @assignment = Assignment.find(params[:id])
 
-    puts("test")
 
     if Assignment.owner(@assignment, current_user)
-
-      puts("test")
 
       Assignment.complete(@assignment)
 

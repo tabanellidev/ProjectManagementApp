@@ -15,4 +15,8 @@ class MainController < ApplicationController
 
     def notauthorized
     end
+
+    def errors
+        @error = params[:id]
+    end
 end

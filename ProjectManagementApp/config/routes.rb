@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
 
   get '/notauthorized', to: 'main#notauthorized'
+  get '/errors', to: 'main#errors'
 
   get 'assignments/:id/complete', to: "assignments#complete" #per testing
   get 'assignments/:id/uncomplete', to: "assignments#uncomplete" #per testing

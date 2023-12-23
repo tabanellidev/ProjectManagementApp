@@ -42,4 +42,10 @@ class AssignmentTest < ActiveSupport::TestCase
     assert_not_nil assignment.errors[:end_date]
   end
 
+  test "assignment with conflicting dates" do
+    assignment = Assignment.new(title: "Test", description: "Test", task_id:0, user_id:0, start_date: DateTime.new(2023,1,1), expiration_date: DateTime.new(2022,1,31))
+    refute assignment.valid?
+    assert_not_nil assignment.errors[:end_date_after_start_date]
+  end
+
 end

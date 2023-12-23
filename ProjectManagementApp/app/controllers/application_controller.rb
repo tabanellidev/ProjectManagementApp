@@ -23,11 +23,16 @@ class ApplicationController < ActionController::Base
   end
 
   rescue_from 'ActionController::ParameterMissing' do |exception|
-    render json: { error: 'No params provided' }, status: 401
+    #render json: { error: 'No params provided' }, status: 401
+    redirect_to :controller => "main", :action => 'errors', id: 401
   end
 
   rescue_from 'ActiveRecord::RecordNotFound' do |exception|
-    render json: { error: 'Record not found' }, status: 404
+    redirect_to :controller => "main", :action => 'errors', id: 404
+  end
+
+  rescue_from 'ActiveRecord::InvalidForeignKey' do |exception|
+    redirect_to :controller => "main", :action => 'errors', id: 400
   end
 
 end

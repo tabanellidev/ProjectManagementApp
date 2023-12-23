@@ -1,12 +1,16 @@
-<h1>Project</h1>
-<p>Lista di tutti i progetti</p>
-
-<ul>
+<br>
+<h1>Lista di tutti i progetti</h1>
+<br>
+<table class="table table-striped table-bordered table-sm">
   <% @projects.each do |project| %>
-    <li>
-      <%= project.title %> <%= button_to "Info", {action: "show", id: project.id}, method: :get %>
-    </li>
+    <tr>
+  
+      <td  class="align-baseline"> <h5> <%= project.title %> </h5> </td>
+      <td> <%= button_to "Info", {action: "show", id: project.id}, method: :get, class: "btn btn-outline-primary" %> </td>
+   
+    </tr>
   <% end %>
-</ul>
+</table>
 
-<%= button_to "Crea Progetto", new_project_path, method: :get  %>
+<br>
+<%= button_to "Crea Progetto", new_project_path, method: :get, class: "btn btn-primary"   %>
