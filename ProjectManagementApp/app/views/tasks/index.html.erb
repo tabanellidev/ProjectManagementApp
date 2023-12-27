@@ -1,10 +1,44 @@
-<h1>Task</h1>
-<p>Lista di tutti i task</p>
+<br>
+<div class="container">
+  <div class="row">
+    <div class="col-md-7 align-self-center">
+      <h1> Lista di tutti i task </h1>
+    </div>
+    
+  </div>
+</div>
 
-<ul>
-  <% @tasks.each do |task| %>
-    <li>
-      <%= task.title %> <%= button_to "Info", {action: "show", id: task.id}, method: :get %>
-    </li>
-  <% end %>
-</ul>
+
+<br>
+<div class="container">
+  <div class="row">
+    <div class="col-md-11 ">
+        <table class="table table-striped table-hover table-bordered">
+          <thead>
+          <tr>
+              <th scope="col">#</th>
+              <th scope="col">Titolo</th>
+              <th scope="col">Progetto</th>
+              <th scope="col">Status</th>
+              <th scope="col">Info</th>
+          </tr>
+          </thead>
+          <% @tasks.each do |task| %>
+          <tr>
+              <td  class="align-baseline"> <h6> <%= task.id %> </h6> </td>
+              <td  class="align-baseline"> <h6> <%= task.title %> </h6> </td>
+              <td  class="align-baseline"> <h6> <%= task.project.title %> </h6> </td>
+              <td  class="align-baseline"> <h6> <%= task.status %> </h6> </td>
+              <td> <%= button_to "Info", {action: "show", id: task.id}, method: :get, class: "btn btn-outline-primary" %> </td>
+          </tr>
+          <% end %>
+      </table>
+    </div>
+    
+  </div>
+</div>
+
+
+
+
+<br>

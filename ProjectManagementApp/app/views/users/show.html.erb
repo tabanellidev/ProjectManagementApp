@@ -19,25 +19,25 @@
 <div class="container">
   <div class="row">
     <div class="col-md-7 ">
-        <%= render "shared/profile", user: current_user %>
+        <%= render "shared/profile", user: @user %>
       <div class="card mb-4">
         <div class="card-body ">
         <h4 class="card-title">Compiti in corso</h4>
-           <%= render "shared/assignments_ongoing", user: current_user %>
+           <%= render "shared/assignments_ongoing", user: @user %>
         </div>
       </div>
       <div class="card ">
         <div class="card-body ">
         <h4 class="card-title">Progetti gestiti</h4>
-           <%= render "shared/manages", user: current_user %>
+           <%= render "shared/manages", user: @user %>
         </div>
       </div>
     </div>
     <div class="col-md-4 ">
-      <div class="card  h-100">
-        <div class="card-body ">
+      <div class="card h-100">
+        <div class="card-body">
         <h4 class="card-title">Compiti completati</h4>
-            <%= render "shared/assignments_completed", user: current_user %>
+            <%= render "shared/assignments_completed", user: @user %>
         </div>
       </div>
     </div>

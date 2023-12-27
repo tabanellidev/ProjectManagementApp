@@ -1,16 +1,46 @@
 <br>
-<h1>Lista di tutti i progetti</h1>
-<br>
-<table class="table table-striped">
-  <% @projects.each do |project| %>
-    <tr>
-  
-      <td  class="align-baseline"> <h5> <%= project.title %> </h5> </td>
-      <td> <%= button_to "Info", {action: "show", id: project.id}, method: :get, class: "btn btn-outline-primary" %> </td>
-   
-    </tr>
-  <% end %>
-</table>
+<div class="container">
+  <div class="row">
+    <div class="col-md-7 align-self-center">
+      <h1> Lista di tutti i progetti </h1>
+    </div>
+    <div class="col-md-5 align-self-center">
+      <div class="btn-toolbar">
+        <%= button_to "Crea Progetto", new_project_path, method: :get, class: "btn btn-outline-info "   %>
+      </div>
+    </div>
+  </div>
+</div>
 
 <br>
-<%= button_to "Crea Progetto", new_project_path, method: :get, class: "btn btn-primary"   %>
+<div class="container">
+  <div class="row">
+    <div class="col-md-11 ">
+        <table class="table table-striped table-hover table-bordered">
+          <thead>
+          <tr>
+              <th scope="col">#</th>
+              <th scope="col">Titolo</th>
+              <th scope="col">Status</th>
+              <th scope="col">Info</th>
+          </tr>
+          </thead>
+          <% @projects.each do |project| %>
+          <tr>
+
+              <td  class="align-baseline"> <h6> <%= project.id %> </h6> </td>
+              <td  class="align-baseline"> <h6> <%= project.title %> </h6> </td>
+              <td  class="align-baseline"> <h6> <%= project.status %> </h6> </td>
+              <td> <%= button_to "Info", {action: "show", id: project.id}, method: :get, class: "btn btn-outline-primary" %> </td>
+          
+          </tr>
+          <% end %>
+      </table>
+    </div>
+    
+  </div>
+</div>
+
+
+
+<br>

@@ -1,55 +1,80 @@
-<h1>Modifica user <%= @user.id %></h1>
-
-<%= form_with model: @user do |form| %>
-  <div>
-    <%= form.label :email %><br>
-    <%= form.text_field :email %>
-    <% @user.errors.full_messages_for(:email).each do |message| %>
-      <div><%= message %></div>
-    <% end %>
+<br>
+<div class="container">
+  <div class="row">
+    <div class="col-md-7 align-self-center">
+      <h1> Modifica Utente </h1>
+    </div>
   </div>
+</div>
 
-  <div>
-    <%= form.label :password %><br>
-    <%= form.text_field :password %>
-    <% @user.errors.full_messages_for(:password).each do |message| %>
-      <div><%= message %></div>
-    <% end %>
-  </div>
+<div class="container">
+  <div class="row">
+    <div class="col-md-7 ">
 
-  <div>
-    <%= form.label :password_confirmation %><br>
-    <%= form.text_field :password_confirmation %>
-    <% @user.errors.full_messages_for(:password_confirmation).each do |message| %>
-      <div><%= message %></div>
-    <% end %>
-  </div>
+      <%= form_with model: @user do |form| %>
+        <div class="form-group">
+          <% invalid = @user.errors.include?(:email) %>
 
-  <div>
-    <%= form.label :name %><br>
-    <%= form.text_field  :name %>
-    <% @user.errors.full_messages_for(:name).each do |message| %>
-      <div><%= message %></div>
-    <% end %>
-  </div>
+          <%= form.label :Email %><br>
+          <%= form.text_field :email, class: "form-control #{'is-invalid' if invalid}", placeholder: "Inserisci l'email" %>
+          <% @user.errors.full_messages_for(:email).each do |message| %>
+            <div class="invalid-feedback d-block"> <%= message %> </div>
+          <% end %>
+        </div>
 
-  <div>
-    <%= form.label :surname %><br>
-    <%= form.text_field :surname %> 
-    <% @user.errors.full_messages_for(:surname).each do |message| %>
-      <div><%= message %></div>
-    <% end %>
-  </div>
+        <div class="form-group">
+          <% invalid = @user.errors.include?(:password) %>
 
-  <div>
-    <%= form.label :role %><br>
-    <%= form.text_field :role %> 
-    <% @user.errors.full_messages_for(:role).each do |message| %>
-      <div><%= message %></div>
-    <% end %>
-  </div>
+          <%= form.label :Password %><br>
+          <%= form.text_field :password, class: "form-control #{'is-invalid' if invalid}", placeholder: "Inserisci la password" %>
+          <% @user.errors.full_messages_for(:password).each do |message| %>
+            <div class="invalid-feedback d-block"> <%= message %> </div>
+          <% end %>
+        </div>
 
-  <div>
-    <%= form.submit %>
+        <div class="form-group">
+          <% invalid = @user.errors.include?(:password_confirmation) %>
+
+          <%= form.label :password_confirmation, 'Conferma Password' %><br>
+          <%= form.text_field :password_confirmation, class: "form-control #{'is-invalid' if invalid}" %>
+          <% @user.errors.full_messages_for(:password_confirmation).each do |message| %>
+            <div class="invalid-feedback d-block"> <%= message %> </div>
+          <% end %>
+        </div>
+
+        <div class="form-group">
+          <% invalid = @user.errors.include?(:name) %>
+
+          <%= form.label :Nome %><br>
+          <%= form.text_field :name, class: "form-control #{'is-invalid' if invalid}", placeholder: "Inserisci il nome" %>
+          <% @user.errors.full_messages_for(:name).each do |message| %>
+            <div class="invalid-feedback d-block"> <%= message %> </div>
+          <% end %>
+        </div>
+
+        
+
+        <div class="form-group">
+          <% invalid = @user.errors.include?(:surname) %>
+
+          <%= form.label :Cognome %><br>
+          <%= form.text_field :surname, class: "form-control #{'is-invalid' if invalid}", placeholder: "Inserisci il cognome" %>
+          <% @user.errors.full_messages_for(:surname).each do |message| %>
+            <div class="invalid-feedback d-block"> <%= message %> </div>
+          <% end %>
+        </div>
+
+        <div class="form-group">
+          <%= form.label :Ruolo %><br>
+          <%= form.select :role, [["Sviluppatore", "developer"], ["Sviluppatore Senior","developer_senior"], ["Amministratore","admin"]], {}, {class: "form-select"} %>    
+        </div>
+
+        <br>
+        <div>
+          <%= form.button "Crea Utente", type: "submit", class: "btn btn-outline-info" %>
+        </div>
+      <% end %>
+
+    </div>
   </div>
-<% end %>
+</div>

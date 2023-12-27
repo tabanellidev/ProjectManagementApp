@@ -8,6 +8,7 @@
 project_one:
   id: 0
   title: Test title
+  client: Cliente1
   description: Test description
   start_date: DateTime.new(2023,1,1)
   expiration_date: DateTime.new(2023,1,31)
@@ -15,6 +16,7 @@ project_one:
 project_two:
   id: 1
   title: Test title
+  client: Cliente1
   description: Test description
   start_date: DateTime.new(2023,1,1)
   expiration_date: DateTime.new(2023,1,31)
@@ -22,6 +24,7 @@ project_two:
 project_three:
   id: 2
   title: Test title
+  client: Cliente1
   description: Test description
   start_date: DateTime.new(2023,1,1)
   expiration_date: DateTime.new(2023,1,31)

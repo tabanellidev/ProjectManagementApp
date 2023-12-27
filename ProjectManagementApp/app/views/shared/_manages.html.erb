@@ -26,9 +26,3 @@
         <% end %>
     <% end %>
 <% end %>
-
-<% @user.projects.each do |project| %>
-    <li>
-      <%= project.title %> <%= button_to "Info", project_path(project.id), method: :get%>
-    </li>
-  <% end %>

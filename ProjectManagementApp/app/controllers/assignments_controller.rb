@@ -47,8 +47,11 @@ class AssignmentsController < ApplicationController
     @assignment = Assignment.find(params[:id])
 
     if Project.manager?(@assignment.task.project, current_user)
+
       @assignment.destroy
-      Assignment.assignment_notice(@assignment,'Destroyed')
+
+      Assignment.assignment_notice(@assignment,'Deleted')
+
       redirect_to action: "index"
 
     else

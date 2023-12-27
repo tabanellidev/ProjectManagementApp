@@ -1,7 +1,84 @@
-<h1>Assignment: <%= @assignment.id %></h1>
+<br>
+<div class="container">
+  <div class="row">
+    <div class="col-md-7 align-self-center">
+      <h1> <%= @assignment.title %>  </h1>
+    </div>
+    <div class="col-md-5 align-self-center">
+      <div class="btn-toolbar">
+        <%= button_to "Modifica", edit_assignment_path, params:{assignment: @assignment.id} , method: :get, class: "btn btn-outline-info"  %>
+        <%= button_to "Elimina", { action: "destroy", id: @assignment.id }, 
+                method: :delete, form: {data: { turbo_confirm: "Are you sure?" } }, class: "btn btn-outline-info" %>
+      </div>
+    </div>
+  </div>
+</div>
 
-Task: <%= @assignment.task.title %>
-<%= button_to "Info", task_path(@assignment.task.id), method: :get%>
+
+<br>
+<div class="container">
+  <div class="row">
+    <div class="col-md-7 ">
+       <div class="card ">
+          <div class="card-body">
+          <h4 class="card-title">Dati del compito</h4>
+            <%= render "shared/attributes", object: @assignment %>
+          </div>
+      </div>
+    </div>
+    <div class="col-md-4 ">
+      <div class="card h-100">
+        <div class="card-body">
+        <h4 class="card-title">Worker</h4>
+        <hr>
+            <div class="row">
+            <% if @assignment.user.id == 0 %>
+                <div class="col-sm-11">
+                    <span class="mb-0 align-middle"> Non ancora assegnato </span>
+                </div>
+            <% else %>
+                <div class="col-sm-1">
+                    <span class="mb-0 align-middle"> <%= @assignment.user.id %> </span>
+                </div>
+                <div class="col-sm-8">
+                    <span class="mb-0 align-middle"> <%= @assignment.user.name %> <%= @assignment.user.surname %> </span>
+                </div>
+                <div class="col-sm-3">
+                    <%= button_to "Info", user_path( @assignment.user.id), method: :get, class: "btn btn-outline-primary"%>
+                </div>
+            <% end %>
+            </div>
+        <hr>
+        <h4 class="card-title">Task</h4>
+        <hr>
+            <div class="row">
+                <div class="col-sm-1">
+                    <span class="mb-0 align-middle"> <%= @assignment.task.id %> </span>
+                </div>
+                <div class="col-sm-8">
+                    <span class="mb-0 align-middle"> <%= @assignment.task.title %> </span>
+                </div>
+                <div class="col-sm-3">
+                    <%= button_to "Info", task_path( @assignment.task.id), method: :get, class: "btn btn-outline-primary"%>
+                </div>
+            </div>
+        <hr>
+        <h4 class="card-title">Project</h4>
+        <hr>
+            <div class="row">
+                <div class="col-sm-1">
+                    <span class="mb-0 align-middle"> <%= @assignment.task.project.id %> </span>
+                </div>
+                <div class="col-sm-8">
+                    <span class="mb-0 align-middle"> <%= @assignment.task.project.title %> </span>
+                </div>
+                <div class="col-sm-3">
+                    <%= button_to "Info", project_path( @assignment.task.project.id), method: :get, class: "btn btn-outline-primary"%>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 <% if @assignment.user == nil%>
     Non è ancora stato assegnato
@@ -12,21 +89,7 @@ Task: <%= @assignment.task.title %>
     <% proprietario = @assignment.user.id %>
 <% end %>
 
-Dati dell'Assignment
-<ul>
-    <li>  Id:  <%= @assignment.id %>  </li>
-    <li>  Title:  <%= @assignment.title %>  </li>
-    <li>  Description:  <%= @assignment.description %>  </li>
-    <li>  Status:  <%= @assignment.status %>  </li>
-    <li>  Task:  <%= @assignment.task.title %>  </li>
-</ul>
-Date
-<ul>
-    <li>  Inizio:  <%= @assignment.start_date %>  </li>
-    <%if @assignment.status == 'Completed' %> <li> Fine:  <%=@assignment.completion_date %> </li> <% end %>
-    <li>  Scadenza:  <%= @assignment.expiration_date %>  </li>
 
-</ul>
 <% if current_user.id == proprietario %>
 
     Sei il propretario
@@ -43,8 +106,3 @@ Date
 
 <%  end %>
 
-<br>
-<%= button_to "Modifica Assignment", edit_assignment_path, params:{assignment: @assignment.id} , method: :get  %>
-<br>
-<%= button_to "Elimina Assignment", { action: "destroy", id: @assignment.id }, 
-        method: :delete, form: {data: { turbo_confirm: "Are you sure?" } }%>

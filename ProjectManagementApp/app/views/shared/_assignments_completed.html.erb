@@ -2,7 +2,7 @@
     <hr>
     <div class="row">
         <div class="col-sm-7">
-            <p class="text-muted mb-0"> Nessun compito assegnato</p>
+            <p class="text-muted mb-0"> Nessun compito ancora completato</p>
         </div>
     </div>
     <% else %>
@@ -16,7 +16,7 @@
                 <div class="col-sm-8">
                     <span class="mb-0 align-middle"> <%= assignment.title %> </span>
                 </div>
-                <div class="col-sm-1">
+                <div class="col-sm-3">
                     <%= button_to "Info", assignment_path(assignment.id), method: :get, class: "btn btn-outline-primary"%>
                 </div>
             </div>

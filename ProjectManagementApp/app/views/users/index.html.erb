@@ -1,12 +1,42 @@
-<h1>Users#index</h1>
-<p>Find me in app/views/users/index.html.erb</p>
+<br>
+<div class="container">
+  <div class="row">
+    <div class="col-md-7 align-self-center">
+      <h1> Lista di utenti </h1>
+    </div>
+    <div class="col-md-5 align-self-center">
+      <div class="btn-toolbar">
+        <%= button_to "Crea Utente", new_user_path, method: :get, class: "btn btn-outline-info "   %>
+      </div>
+    </div>
+  </div>
+</div>
 
-<ul>
-  <% @users.each do |user| %>
-    <li>
-      <%= user.email %> <%= button_to "Info", {action: "show", id: user.id}, method: :get %>
-    </li>
-  <% end %>
-</ul>
-
-<%= button_to "Crea Utente", new_user_path, method: :get  %>
+<br>
+<div class="container">
+  <div class="row">
+    <div class="col-md-11 ">
+        <table class="table table-striped table-hover table-bordered">
+          <thead>
+          <tr>
+              <th scope="col">#</th>
+              <th scope="col">Email</th>
+              <th scope="col">Nominativo</th>
+              <th scope="col">Ruolo</th>
+              <th scope="col">Info</th>
+          </tr>
+          </thead>
+          <% @users.each do |user| %>
+              <tr>
+                  <td  class="align-baseline"> <h6> <%= user.id %> </h6> </td>
+                  <td  class="align-baseline"> <h6> <%= user.email %> </h6> </td>
+                  <td  class="align-baseline"> <h6> <%= user.name %> <%= user.surname %> </h6> </td>
+                  <td  class="align-baseline"> <h6> <%= user.role %> </h6> </td>
+                  <td> <%= button_to "Info", {action: "show", id: user.id}, method: :get, class: "btn btn-outline-primary" %> </td>
+              </tr>
+          <% end %>
+      </table>
+    </div>
+    
+  </div>
+</div>

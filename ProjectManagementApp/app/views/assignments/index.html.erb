@@ -1,36 +1,83 @@
-<h1> Storico dei compiti </h1>
+<br>
+<div class="container">
+  <div class="row">
+    <div class="col-md-7 align-self-center">
+      <h1> Compiti non ancora completati </h1>
+    </div>
+    
+  </div>
+</div>
 
-<h3> Compiti non ancora assegnati </h3>
-<ul>
-  <% @assignments.each do |assignment| %>
-    <% if assignment.user.id == 0 %>
-    <li>
-      Task: <%= assignment.task.title %> <%= button_to "Info", {action: "show", id: assignment.id}, method: :get %>
-    </li>
-    <% end %>
-  <% end %>
-</ul>
+<br>
+<div class="container">
+  <div class="row">
+    <div class="col-md-11 ">
+        <table class="table table-striped table-hover table-bordered">
+          <thead>
+          <tr>
+              <th scope="col">#</th>
+              <th scope="col">Titolo</th>
+              <th scope="col">Task</th>
+              <th scope="col">Status</th>
+              <th scope="col">Assegnato a</th>
+              <th scope="col">Info</th>
+          </tr>
+          </thead>
+          <% @assignments.each do |assignment| %>
+            <% if assignment.status == 'Uncompleted' || assignment.status == 'Expired' %>
+              <tr>
+                  <td  class="align-baseline"> <h6> <%= assignment.id %> </h6> </td>
+                  <td  class="align-baseline"> <h6> <%= assignment.title %> </h6> </td>
+                  <td  class="align-baseline"> <h6> <%= assignment.task.title %> </h6> </td>
+                  <td  class="align-baseline"> <h6> <%= assignment.status %> </h6> </td>
+                  <td  class="align-baseline"> <h6> <%= assignment.user.name %> <%= assignment.user.surname %>  </h6> </td>
+                  <td> <%= button_to "Info", {action: "show", id: assignment.id}, method: :get, class: "btn btn-outline-primary" %> </td>
+              </tr>
+            <% end %>
+          <% end %>
+      </table>
+    </div>
+    
+  </div>
+</div>
 
-<h3> Compiti non ancora completati </h3>
-<ul>
-  <% @assignments.each do |assignment| %>
-    <% if assignment.user.id != 0 and assignment.status == 'Uncompleted' %>
-    <li>
-      Utente: <%= assignment.user.name %> <%= assignment.user.surname %> 
-      Task: <%= assignment.task.title %> <%= button_to "Info", {action: "show", id: assignment.id}, method: :get %>
-    </li>
-    <% end %>
-  <% end %>
-</ul>
+<br>
+<div class="container">
+  <div class="row">
+    <div class="col-md-7 align-self-center">
+      <h1> Storico di tutti i compiti </h1>
+    </div>
+    
+  </div>
+</div>
 
-<h3> Compiti completati </h3>
-<ul>
-  <% @assignments.each do |assignment| %>
-    <% if assignment.user.id != 0 and assignment.status == 'Completed' %>
-    <li>
-      Utente: <%= assignment.user.name %> <%= assignment.user.surname %> 
-      Task: <%= assignment.task.title %> <%= button_to "Info", {action: "show", id: assignment.id}, method: :get %>
-    </li>
-    <% end %>
-  <% end %>
-</ul>
+<br>
+<div class="container">
+  <div class="row">
+    <div class="col-md-11 ">
+        <table class="table table-striped table-hover table-bordered">
+          <thead>
+          <tr>
+              <th scope="col">#</th>
+              <th scope="col">Titolo</th>
+              <th scope="col">Task</th>
+              <th scope="col">Status</th>
+              <th scope="col">Assegnato a</th>
+              <th scope="col">Info</th>
+          </tr>
+          </thead>
+          <% @assignments.each do |assignment| %>
+          <tr>
+              <td  class="align-baseline"> <h6> <%= assignment.id %> </h6> </td>
+              <td  class="align-baseline"> <h6> <%= assignment.title %> </h6> </td>
+              <td  class="align-baseline"> <h6> <%= assignment.task.title %> </h6> </td>
+              <td  class="align-baseline"> <h6> <%= assignment.status %> </h6> </td>
+              <td  class="align-baseline"> <h6> <%= assignment.user.name %> <%= assignment.user.surname %>  </h6> </td>
+              <td> <%= button_to "Info", {action: "show", id: assignment.id}, method: :get, class: "btn btn-outline-primary" %> </td>
+          </tr>
+          <% end %>
+      </table>
+    </div>
+    
+  </div>
+</div>

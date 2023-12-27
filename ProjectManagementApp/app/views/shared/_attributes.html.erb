@@ -1,0 +1,65 @@
+<hr>
+<div class="row">
+    <div class="col-sm-3">
+    <p class="mb-0">Identificativo</p>
+    </div>
+    <div class="col-sm-9">
+    <p class="text-muted mb-0"><%= object.id %></p>
+    </div>
+</div>
+<hr>
+<div class="row">
+    <div class="col-sm-3">
+    <p class="mb-0">Titolo</p>
+    </div>
+    <div class="col-sm-9">
+    <p class="text-muted mb-0"><%= object.title %></p>
+    </div>
+</div>
+<hr>
+<div class="row">
+    <div class="col-sm-3">
+    <p class="mb-0">Descrizione</p>
+    </div>
+    <div class="col-sm-9">
+    <p class="text-muted mb-0"><%= object.description %></p>
+    </div>
+</div>
+<hr>
+<div class="row">
+    <div class="col-sm-3">
+    <p class="mb-0">Status</p>
+    </div>
+    <div class="col-sm-9">
+    <p class="text-muted mb-0"><%= object.status %></p>
+    </div>
+</div>
+<hr>
+<div class="row">
+    <div class="col-sm-3">
+    <p class="mb-0">Data di inizio</p>
+    </div>
+    <div class="col-sm-9">
+    <p class="text-muted mb-0"><%= object.start_date %></p>
+    </div>
+</div>
+<hr>
+<div class="row">
+    <div class="col-sm-3">
+    <p class="mb-0">Data di scadenza</p>
+    </div>
+    <div class="col-sm-9">
+    <p class="text-muted mb-0"><%= object.expiration_date %></p>
+    </div>
+</div>
+<% if object.completion_date?%>
+<hr>
+<div class="row">
+    <div class="col-sm-3">
+    <p class="mb-0">Completamento </p>
+    </div>
+    <div class="col-sm-9">
+    <p class="text-muted mb-0"><%= object.expiration_date %></p>
+    </div>
+</div>
+<% end %>

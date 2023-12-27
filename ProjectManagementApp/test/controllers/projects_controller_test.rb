@@ -25,11 +25,11 @@ class ProjectsControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to :notauthorized
 
     #Update
-    put project_path(project.id), params: { project: {title: "Test", description: "Test", start_date: DateTime.new(2023,1,1), expiration_date: DateTime.new(2023,1,31)} }
+    put project_path(project.id), params: { project: {title: "Test", description: "Test", client: "Cliente1", start_date: DateTime.new(2023,1,1), expiration_date: DateTime.new(2023,1,31)} }
     assert_redirected_to :notauthorized
 
     #Create
-    post projects_path, params: { project: {title: "Test", description: "Test", start_date: DateTime.new(2023,1,1), expiration_date: DateTime.new(2023,1,31)} }
+    post projects_path, params: { project: {title: "Test", description: "Test", client: "Cliente1", start_date: DateTime.new(2023,1,1), expiration_date: DateTime.new(2023,1,31)} }
     assert_redirected_to :notauthorized
 
     #New
@@ -59,11 +59,11 @@ class ProjectsControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to :notauthorized
 
     #Update
-    put project_path(project.id), params: { project: {title: "Test", description: "Test", start_date: DateTime.new(2023,1,1), expiration_date: DateTime.new(2023,1,31)} }
+    put project_path(project.id), params: { project: {title: "Test", description: "Test", client: "Cliente1", start_date: DateTime.new(2023,1,1), expiration_date: DateTime.new(2023,1,31)} }
     assert_redirected_to :notauthorized
 
     #Create
-    post projects_path, params: { project: {id: 3, title: "Test", description: "Test", start_date: DateTime.new(2023,1,1), expiration_date: DateTime.new(2023,1,31)} }
+    post projects_path, params: { project: {id: 3, title: "Test", description: "Test", client: "Cliente1", start_date: DateTime.new(2023,1,1), expiration_date: DateTime.new(2023,1,31)} }
     assert_redirected_to project_path(id: 3)
 
     #New
@@ -94,11 +94,11 @@ class ProjectsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
 
     #Update
-    put project_path(project.id), params: { project: {title: "Test", description: "Test", start_date: DateTime.new(2023,1,1), expiration_date: DateTime.new(2023,1,31)} }
+    put project_path(project.id), params: { project: {title: "Test", client: "Cliente1", description: "Test", start_date: DateTime.new(2023,1,1), expiration_date: DateTime.new(2023,1,31)} }
     assert_redirected_to project_path(id: 0)
 
     #Create
-    post projects_path, params: { project: {id: 3, title: "Test", description: "Test", start_date: DateTime.new(2023,1,1), expiration_date: DateTime.new(2023,1,31)} }
+    post projects_path, params: { project: {id: 3, title: "Test", description: "Test", client: "Cliente1", start_date: DateTime.new(2023,1,1), expiration_date: DateTime.new(2023,1,31)} }
     assert_redirected_to project_path(id: 3)
 
     #New
@@ -129,11 +129,11 @@ class ProjectsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
 
     #Update
-    put project_path(project.id), params: { project: {title: "Test", description: "Test", start_date: DateTime.new(2023,1,1), expiration_date: DateTime.new(2023,1,31)} }
+    put project_path(project.id), params: { project: {title: "Test", description: "Test", client: "Cliente1",start_date: DateTime.new(2023,1,1), expiration_date: DateTime.new(2023,1,31)} }
     assert_redirected_to project_path(id: 0)
 
     #Create
-    post projects_path, params: { project: {title: "Test", description: "Test", start_date: DateTime.new(2023,1,1), expiration_date: DateTime.new(2023,1,31)} }
+    post projects_path, params: { project: {title: "Test", description: "Test", client: "Cliente1", start_date: DateTime.new(2023,1,1), expiration_date: DateTime.new(2023,1,31)} }
     assert_redirected_to :notauthorized
 
     #New
@@ -163,11 +163,11 @@ class ProjectsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
 
     #Update
-    put project_path(project.id), params: { project: {title: "Test", description: "Test", start_date: DateTime.new(2023,1,1), expiration_date: DateTime.new(2023,1,31)} }
+    put project_path(project.id), params: { project: {title: "Test", description: "Test", client: "Cliente1", start_date: DateTime.new(2023,1,1), expiration_date: DateTime.new(2023,1,31)} }
     assert_redirected_to project_path(id: 0)
 
     #Create
-    post projects_path, params: { project: {id: 3, title: "Test", description: "Test", start_date: DateTime.new(2023,1,1), expiration_date: DateTime.new(2023,1,31)} }
+    post projects_path, params: { project: {id: 3, title: "Test", description: "Test", client: "Cliente1", start_date: DateTime.new(2023,1,1), expiration_date: DateTime.new(2023,1,31)} }
     assert_redirected_to project_path(id: 3)
 
     #New
