@@ -21,6 +21,10 @@ class ProjectNotification < Noticed::Base
     params[:message]
   end
 
+  def id
+    self.params["id"]
+  end
+
   def object
     if self.params["object"] == "Assignment"
       return "compito"

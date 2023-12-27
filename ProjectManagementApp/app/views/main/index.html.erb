@@ -1,74 +1,48 @@
+<br>
 <div class="d-flex align-items-center justify-content-center">
-<H1> Welcome to Project ManagementApp </H1>
+<H1> Welcome to Project Management App </H1>
 </div>
 
+<br>
 <% if current_user %>
-    <p> Hello <%= current_user.email %>| </p>
-    <p> Id  [<%= current_user.id %>] </p>
-    <p> Name [<%= current_user.name %>] </p>
-    <p> Surname [<%= current_user.surname %>] </p>
-    <p> You are a [<%= current_user.role %>] </p>
-    <p>
-        You have successfully authenticated with your Devise account.
-        You are now ready to interact with this application
-    </p>
+<div class="container">
+  <div class="row">
+    <div class="col-md-7 ">        
+          <%= render "shared/profile", user: current_user %>
 
-    
-
-
-    <%= link_to "Sign out", destroy_user_session_path, 'data-turbo-method': :delete %>
+      
+      <div class="card ">
+        <div class="card-body ">
+        <h4 class="card-title">Compiti in corso</h4>
+           <%= render "shared/assignments_ongoing", user: current_user %>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card h-100 ">
+        <div class="card-body">
+        <h4 class="card-title">Notifiche</h4>
+        <hr>
+          <div class="scrollable" style="overflow-y: auto; max-height: 350px;">
+            <%= turbo_frame_tag "notifications" do %>
+              <%= render "notifications/notifications", user: current_user %>
+            <%  end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 <% else %>
     <p> You are not signed in. </p>
         <%= link_to "Sign Up", new_user_registration_path %>
         <%= link_to "Login", new_user_session_path %>
 <%  end %>
 
-<% if current_user %>
-<br><br>
-Id: <%= current_user.id%>
+<%= link_to "Sign out", destroy_user_session_path, 'data-turbo-method': :delete %>
 
-<% if current_user %>
-  <div class="col-4">
-      <%= turbo_frame_tag "notifications" do %>
-        <%= render "notifications/notifications", user: current_user %>
-      <% end %>
-    </div>
-<% end %>
 
-Compiti associati: 
 
-<ul>
-  <% current_user.assignments.each do |assignment| %>
-    <% if not assignment.status? %>
-        <li>
-            <%= assignment.title %> <%= button_to "Info", assignment_path(assignment.id), method: :get%>
-        </li>
-    <% end %>
-  <% end %>
-</ul>
 
-Compiti completati: 
-
-<ul>
-  <% current_user.assignments.each do |assignment| %>
-    <% if assignment.status? %>
-        <li>
-            <%= assignment.title %> <%= button_to "Info", assignment_path(assignment.id), method: :get%>
-        </li>
-    <% end %>
-  <% end %>
-</ul>
-
-Task associati: 
-
-<ul>
-  <% current_user.tasks.uniq.each do |task| %>
-    <li>
-      <%= task.title %> <%= button_to "Info", task_path(task.id), method: :get%>
-    </li>
-  <% end %>
-
-</ul>
-<%  end %>
 
 

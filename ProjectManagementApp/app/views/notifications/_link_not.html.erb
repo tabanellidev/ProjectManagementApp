@@ -1,0 +1,9 @@
+<%if notification.to_notification.object == "compito"%>
+    <%= link_to notification.to_notification.title , assignment_path(notification.to_notification.id), method: :get, target: :_blank %>
+<% end %>
+<%if notification.to_notification.object == "task"%>
+    <%= link_to notification.to_notification.title, task_path(notification.to_notification.id), method: :get, target: :_blank %>
+<% end %>
+<%if notification.to_notification.object == "project"%>
+    <%= link_to notification.to_notification.title, project_path(notification.to_notification.id), method: :get, target: :_blank %>
+<% end %>

@@ -1,49 +1,48 @@
-<h1>User: <%= @user.id %></h1>
-
-Dati dell'utente
-<ul>
-    <li>  Id:  <%= @user.id %>  </li>
-    <li>  Email:  <%= @user.email %>  </li>
-    <li>  Role:  <%= @user.role %>  </li>
-    <li>  Name:  <%= @user.name %>  </li>
-    <li>  Surname:  <%= @user.surname %>  </li>
-</ul>
-
-
-<% if @user.projects.empty?%>
-Non gestisce nessun progetto<br>
-<% else %>
-<h2> Progetti gestiti </h2>
-<ul>
-
-  <% @user.projects.each do |project| %>
-    <li>
-      <%= project.title %> <%= button_to "Info", project_path(project.id), method: :get%>
-    </li>
-  <% end %>
-
-<% end %>
-</ul>
-
-<% if @user.tasks.empty?%>
-Non ha assegnato nessun task<br>
-<% else %>
-<h2> Task assegnati </h2>
-<ul>
-
-  <% @user.tasks.uniq.each do |task| %>
-    <li>
-      <%= task.title %> <%= button_to "Info", task_path(task.id), method: :get%>
-    </li>
-  <% end %>
-
-<% end %>
+<br>
+<div class="container">
+  <div class="row">
+    <div class="col-md-7 align-self-center">
+      <h1> Profilo utente </h1>
+    </div>
+    <div class="col-md-5 align-self-center">
+      <div class="btn-toolbar">
+        <%= button_to "Modifica", edit_user_path, params:{user: @user.id} , method: :get, class: "btn btn-outline-info" %>
+        <%= button_to "Elimina", { action: "destroy", id: @user.id }, 
+        method: :delete, form: {data: { turbo_confirm: "Are you sure?" } }, class: "btn btn-outline-info "%>
+      </div>
+    </div>
+  </div>
+</div>
 
 
-</ul>
+<br>
+<div class="container">
+  <div class="row">
+    <div class="col-md-7 ">
+        <%= render "shared/profile", user: current_user %>
+      <div class="card mb-4">
+        <div class="card-body ">
+        <h4 class="card-title">Compiti in corso</h4>
+           <%= render "shared/assignments_ongoing", user: current_user %>
+        </div>
+      </div>
+      <div class="card ">
+        <div class="card-body ">
+        <h4 class="card-title">Progetti gestiti</h4>
+           <%= render "shared/manages", user: current_user %>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4 ">
+      <div class="card  h-100">
+        <div class="card-body ">
+        <h4 class="card-title">Compiti completati</h4>
+            <%= render "shared/assignments_completed", user: current_user %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
-<%= button_to "Modifica User", edit_user_path, params:{user: @user.id} , method: :get  %>
 
-<%= button_to "Elimina User", { action: "destroy", id: @user.id }, 
-        method: :delete, form: {data: { turbo_confirm: "Are you sure?" } }%>
 

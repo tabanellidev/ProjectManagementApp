@@ -1,0 +1,34 @@
+<% if !user.projects %>
+    <hr>
+    <div class="row">
+        <div class="col-sm-7">
+            <p class="text-muted mb-0"> Nessun gestisce nessun progetto </p>
+        </div>
+    </div>
+    <% else %>
+    <% user.projects.each do |project| %>
+        <% if project.status == 'Uncompleted' || project.status == 'Expired' %>
+            <hr>
+            <div class="row">
+                <div class="col-sm-2 ">
+                    <span class="mb-0 align-middle"> <%= project.id %> </span>
+                </div>
+                <div class="col-sm-5">
+                    <span class="text-muted mb-0 align-middle"> <%= project.title %> </span>
+                </div>
+                <div class="col-sm-3">
+                    <span class="text-muted mb-0 align-middle"> <%= project.status %> </span>
+                </div>
+                <div class="col-sm-1">
+                    <%= button_to "Info", project_path(project.id), method: :get, class: "btn btn-outline-primary"%>
+                </div>
+            </div>
+        <% end %>
+    <% end %>
+<% end %>
+
+<% @user.projects.each do |project| %>
+    <li>
+      <%= project.title %> <%= button_to "Info", project_path(project.id), method: :get%>
+    </li>
+  <% end %>

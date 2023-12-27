@@ -33,6 +33,8 @@ class Assignment < ApplicationRecord
     end
     if type == 'Edit'
       targets = Project.managers(assignment.task.project)
+      targets.append(assignment.user.id)
+      targets = targets.uniq
 
       assignment = assignment.as_json
       assignment["type"] = "Edit"
