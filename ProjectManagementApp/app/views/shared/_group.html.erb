@@ -1,0 +1,22 @@
+<div class="card h-100">
+    <div class="card-body ">
+        <h4 class="card-title"><%= type %> group</h4>
+            <% group.each do |user| %>
+            <hr>
+            <div class="row">
+                <div class="col-sm-2">
+                    <span class="mb-0 align-middle"> <%= user.id %></span>
+                </div>
+                <div class="col-sm-4">
+                    <span class="mb-0 align-middle"> <%= user.name %> <%= user.surname %> </span>
+                </div>
+                <div class="col-sm-4">
+                    <span class="mb-0 align-middle"> <%= user.role %> </span>
+                </div>
+                <div class="col-sm-2">
+                    <%= button_to "Info", user_path(user.id), method: :get, class: "btn btn-outline-primary"%>
+                </div>
+            </div>
+            <% end %>
+    </div>
+</div>
