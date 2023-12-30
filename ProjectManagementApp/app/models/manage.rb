@@ -5,4 +5,13 @@ class Manage < ApplicationRecord
 
   belongs_to :user
   belongs_to :project
+
+
+  def self.possibleManagers(userlist, project)
+
+    possibleManagers = userlist - project.users
+
+  end
+
+
 end

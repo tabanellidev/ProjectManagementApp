@@ -17,4 +17,41 @@ class User < ApplicationRecord
 
   has_many :notifications, as: :recipient
 
+  def self.workedTask(user)
+
+    list = []
+
+    user.assignments.each do |assignment|
+
+      if assignment.status == 'Completed' or assignment.status == 'Delayed'
+        list.append(assignment.task)
+      end
+    end
+
+    list.uniq
+
+  end
+
+  def self.projectManaged(user)
+
+    list = []
+
+    user.projects.each do |project|
+
+      if project.status == 'Completed' or project.status == 'Delayed'
+        list.append(project)
+      end
+
+    end
+
+    list.uniq
+
+  end
+
+
+
+
+
+
+
 end

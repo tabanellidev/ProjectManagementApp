@@ -9,6 +9,11 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find_by_id(params[:id])
+
+    @workedTask = User.workedTask(@user)
+
+    @projectManaged = User.projectManaged(@user)
+
   end
 
 

@@ -49,9 +49,9 @@
           <% @task.errors.full_messages_for(:expiration_date).each do |message| %>
             <div><%= message %></div>
           <% end %>
-        </div>
-          <%= form.hidden_field :project_id, value: params[:project_id] %>
         <div>
+          <%= form.hidden_field :project_id, value: params[:project_id] %>
+        </div>
         <br>
         <div>
           <%= form.button "Crea Task", type: "submit", class: "btn btn-outline-info" %>

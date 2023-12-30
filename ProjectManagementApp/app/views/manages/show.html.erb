@@ -1,15 +1,75 @@
-<h1>Gestione: <%= @manage.id %></h1>
+<br>
+<div class="container">
+  <div class="row">
+    <div class="col-md-7 align-self-center">
+      <h1> Gestione <%= @manage.project.title %> </h1>
+    </div>
+    <div class="col-md-5 align-self-center">
+      <div class="btn-toolbar">
+        <%= button_to "Cambia gestore", edit_manage_path, params:{manage: @manage.id} , method: :get, class: "btn btn-outline-info"  %>
+        <%= button_to "Elimina", { action: "destroy", id: @manage.id }, 
+                method: :delete, form: {data: { turbo_confirm: "Are you sure?" } }, class: "btn btn-outline-info"%>
 
-<ul>
-    <li>  Id:  <%= @manage.id %>  </li>
-    <li>  Gestore:  <%= @manage.user.name %>  <%= @manage.user.surname %></li>
-    <li>  Progetto:  <%= @manage.project.id %>  </li>
-    <li>  Titolo:  <%= @manage.project.title %>  </li>
-    <li>  Descrizione:  <%= @manage.project.description %>  </li>
-</ul>
+      </div>
+    </div>
+  </div>
+</div>
 
 <br>
-<%= button_to "Modifica Gestione", edit_manage_path, params:{manage: @manage.id} , method: :get  %>
-<br>
-<%= button_to "Elimina Gestione", { action: "destroy", id: @manage.id }, 
-        method: :delete, form: {data: { turbo_confirm: "Are you sure?" } }%>
+<div class="container">
+  <div class="row">
+    <div class="col-md-7 ">
+       <div class="card ">
+          <div class="card-body">
+          <h4 class="card-title">Dati del progetto</h4>
+            <%= render "shared/attributes", object: @manage.project %>
+            <hr>
+            <div class="row">
+                <div class="col-sm-3">
+                <p class="mb-0">Cliente</p>
+                </div>
+                <div class="col-sm-9">
+                <p class="text-muted mb-0"><%= @manage.project.client %></p>
+                </div>
+            </div>
+          </div>
+      </div>
+    </div>
+    <div class="col-md-4 ">
+      <div class="card h-100">
+        <div class="card-body ">
+          <h4 class="card-title">Dati associato al gestore</h4>
+            <hr>
+            <div class="row">
+                <div class="col-sm-5">
+                <p class="mb-0">Identificativo</p>
+                </div>
+                <div class="col-sm-6">
+                <p class="text-muted mb-0"><%= @manage.user.id %> </p>
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-sm-5">
+                <p class="mb-0">Nominativo</p>
+                </div>
+                <div class="col-sm-6">
+                <p class="text-muted mb-0"><%= @manage.user.name %> <%= @manage.user.surname %></p>
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-sm-5">
+                <p class="mb-0">Ruolo</p>
+                </div>
+                <div class="col-sm-6">
+                <p class="text-muted mb-0"><%= @manage.user.role %> </p>
+                </div>
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+

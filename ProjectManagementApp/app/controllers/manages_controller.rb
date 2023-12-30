@@ -15,6 +15,8 @@ class ManagesController < ApplicationController
   def edit
     @manage = Manage.find(params[:id])
 
+    @users = User.all
+
     if not Project.manager?(@manage.project, current_user)
       not_authorized
     end
@@ -57,6 +59,10 @@ class ManagesController < ApplicationController
     @manage = Manage.new
 
     @project = Project.find(project_params)
+
+    @users = User.all
+
+    @possibleManagers = Manage.possibleManagers(@users,@project)
 
     if not Project.manager?(@project, current_user)
       not_authorized

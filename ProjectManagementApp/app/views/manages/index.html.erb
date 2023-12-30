@@ -1,15 +1,39 @@
-<h1>Lista di tutti le gestioni</h1>
+<br>
+<div class="container">
+  <div class="row">
+    <div class="col-md-7 align-self-center">
+      <h1> Lista di tutti le gestioni </h1>
+    </div>
+  </div>
+</div>
 
-<ul>
-  <% @manages.each do |manage| %>
-  <li>
-    <ul>
-        <li> Id gestione: <%= manage.id %> </li>
-        <li> Gestore <%= manage.user.name%> <%= manage.user.surname%> </li>
-        <li> Progetto <%= manage.project.title %> </li> 
-        <%= button_to "Info", {action: "show", id: manage.id}, method: :get %>
-    </ul>
-  </li>
-  <% end %>
-</ul>
+<br>
+<div class="container">
+  <div class="row">
+    <div class="col-md-11 ">
+        <table class="table table-striped table-hover table-bordered">
+          <thead>
+          <tr>
+              <th scope="col">#</th>
+              <th scope="col">Gestore</th>
+              <th scope="col">Progetto</th>
+              <th scope="col">Status</th>
+          </tr>
+          </thead>
+          <% @manages.each do |manage| %>
+          <tr>
+
+              <td  class="align-baseline"> <h6> <%= manage.id %> </h6> </td>
+              <td  class="align-baseline"> <h6> <%= manage.project.title %> </h6> </td>
+              <td  class="align-baseline"> <h6> <%= manage.project.status %> </h6> </td>
+              <td  class="align-baseline"> <h6> <%= manage.user.name %> <%= manage.user.surname %> </h6> </td>
+              <td> <%= button_to "Info", {action: "show", id: manage.id}, method: :get, class: "btn btn-outline-primary" %> </td>
+          
+          </tr>
+          <% end %>
+      </table>
+    </div>
+    
+  </div>
+</div>
 

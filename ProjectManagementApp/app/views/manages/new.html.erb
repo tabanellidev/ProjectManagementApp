@@ -1,29 +1,66 @@
-<h1> Crea nuova Gestione </h1>
-
-Stai creando un gestore per il progetto: <%= params[:project_id] %> <br>
-
-<% if @manage.errors.any? %>
-Errori:<br>
-  <% @manage.errors.full_messages.each do |message|%>
-  <%= message %> <br>
-  <%end%>
-<%end%>
-
-<%= form_with model: @manage do |form| %>
-  <div>
-    <%= form.label :user_id %><br>
-    <%= form.number_field :user_id %> 
-    <% @manage.errors.full_messages_for(:user_id).each do |message| %>
-      <div><%= message %></div>
-    <% end %>
+<br>
+<div class="container">
+  <div class="row">
+    <div class="col-md-11 align-self-center">
+      <h1> Modifica Gestione del progetto <%= @project.title %> </h1> 
+    </div>
   </div>
-
-  <%= form.hidden_field :project_id, value: params[:project_id] %>
-
-
-
-
-  <div>
-    <%= form.submit %>
+</div>
+<br>
+<div class="container">
+  <div class="row">
+    <div class="col-md-6 ">
+       <div class="card ">
+          <div class="card-body">
+          <h4 class="card-title">Dati del progetto</h4>
+            <%= render "shared/attributes", object: @project %>
+            <hr>
+            <div class="row">
+                <div class="col-sm-3">
+                <p class="mb-0">Cliente</p>
+                </div>
+                <div class="col-sm-9">
+                <p class="text-muted mb-0"><%= @project.client %></p>
+                </div>
+            </div>
+          </div>
+      </div>
+    </div>
+    <div class="col-md-6 ">
+      <div class="card h-100">
+        <div class="card-body ">
+          <h4 class="card-title">Gestori</h4>
+            <% @possibleManagers.each do |user| %>
+                <hr>
+                <div class="row">
+                    <div class="col-sm-1">
+                        <span class="mb-0 align-middle"> <%= user.id %></span>
+                    </div>
+                    <div class="col-sm-4">
+                        <span class="mb-0 align-middle"> <%= user.name %> <%= user.surname %> </span>
+                    </div>
+                    <div class="col-sm-3">
+                        <span class="mb-0 align-middle"> <%= user.role %> </span>
+                    </div>
+                    <div class="col-sm-2">
+                      <%= form_with model: @manage do |form| %>
+                        <%= form.hidden_field :project_id, value: params[:project_id] %>
+                        <%= form.hidden_field :user_id, value: user.id %>
+                        <%= form.button "Seleziona", type: "submit", class: "btn btn-outline-info" %>
+                      <% end %>
+                    </div>
+                </div>
+              <% end %>
+        </div>
+      </div>
+    </div>
   </div>
-<% end %>
+</div>
+
+
+
+<br>
+<br>
+<br>
+<br>
+<br>

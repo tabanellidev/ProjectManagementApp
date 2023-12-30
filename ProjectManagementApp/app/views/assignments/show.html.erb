@@ -9,6 +9,13 @@
         <%= button_to "Modifica", edit_assignment_path, params:{assignment: @assignment.id} , method: :get, class: "btn btn-outline-info"  %>
         <%= button_to "Elimina", { action: "destroy", id: @assignment.id }, 
                 method: :delete, form: {data: { turbo_confirm: "Are you sure?" } }, class: "btn btn-outline-info" %>
+        
+        <% if current_user.id == @assignment.user.id %>
+            <%= button_to "Completa", { action: "complete", id: @assignment.id }, 
+            method: :get, form: {data: { turbo_confirm: "Are you sure?" } }, class: "btn btn-outline-info"%>
+        <% end %>
+      
+      
       </div>
     </div>
   </div>
@@ -29,7 +36,7 @@
     <div class="col-md-4 ">
       <div class="card h-100">
         <div class="card-body">
-        <h4 class="card-title">Worker</h4>
+        <h4 class="card-title">Lavoratore</h4>
         <hr>
             <div class="row">
             <% if @assignment.user.id == 0 %>
@@ -63,7 +70,7 @@
                 </div>
             </div>
         <hr>
-        <h4 class="card-title">Project</h4>
+        <h4 class="card-title">Progetto</h4>
         <hr>
             <div class="row">
                 <div class="col-sm-1">
@@ -80,29 +87,8 @@
     </div>
 </div>
 
-<% if @assignment.user == nil%>
-    Non è ancora stato assegnato
-    <% proprietario = -1 %>
-<% else %>
-    Name: <%= @assignment.user.name %>
-    <%= button_to "Info", user_path(@assignment.user.id), method: :get%>
-    <% proprietario = @assignment.user.id %>
-<% end %>
-
-
-<% if current_user.id == proprietario %>
-
-    Sei il propretario
-
-    <%= button_to "Completa task", { action: "complete", id: @assignment.id }, 
-        method: :get, form: {data: { turbo_confirm: "Are you sure?" } }%>
-    
-    <%= button_to "Uncompleta task", { action: "uncomplete", id: @assignment.id }, 
-    method: :get, form: {data: { turbo_confirm: "Are you sure?" } }%>
-
-<% else %>
-
-    Non sei il propretario
-
-<%  end %>
-
+<br>
+<br>
+<br>
+<br>
+<br>

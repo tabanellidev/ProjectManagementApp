@@ -15,6 +15,7 @@ class AssignmentsController < ApplicationController
 
   def edit
     @assignment = Assignment.find(params[:id])
+    @user_array = User.all.map { |user| [user.id.to_s + " - " + user.name + " " + user.surname, user.id] }
 
     if not Project.manager?(@assignment.task.project, current_user)
       not_authorized
@@ -64,6 +65,8 @@ class AssignmentsController < ApplicationController
     @assignment = Assignment.new
 
     @task = Task.find(task_params)
+
+    @user_array = User.all.map { |user| [user.id.to_s + " - " + user.name + " " + user.surname, user.id] }
 
     if not Project.manager?(@task.project, current_user)
       not_authorized

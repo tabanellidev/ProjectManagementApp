@@ -11,8 +11,8 @@ User.create([{
   email: 'unassigned@example.com',
   password:"unassigned",
   password_confirmation:"unassigned",
-  name: "Non Assegnato",
-  surname: " "
+  name: "Non",
+  surname: "Assegnato"
 },{
   email: 'test1@example.com',
   password:"testing1",

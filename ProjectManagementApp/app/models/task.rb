@@ -170,4 +170,17 @@ class Task < ApplicationRecord
 
   end
 
+  def self.taskGroup(task)
+
+    list = []
+
+    task.assignments.each do |assignment|
+      list.append(assignment.user)
+    end
+
+
+    list.uniq
+
+  end
+
 end

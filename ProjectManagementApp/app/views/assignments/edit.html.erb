@@ -32,15 +32,10 @@
           <% end %>
         </div>
 
-        
-        <% user_array = User.all.map { |user| [user.name + " " + user.surname, user.id] } %>
-
         <div class="form-group">
           <%= form.label :user_id %><br>
-          <%= form.select :user_id, options_for_select(user_array), {}, {class: "form-select"} %>    
+          <%= form.select :user_id, options_for_select(@user_array), {}, {class: "form-select"} %>    
         </div>
-
-        
 
         <div class="form-group">
           <% invalid = @assignment.errors.include?(:start_date) %>

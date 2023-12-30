@@ -150,5 +150,19 @@ class Project < ApplicationRecord
 
   end
 
+  def self.projectGorup(project)
+
+    list = []
+
+    project.tasks.each do |task|
+      task.assignments.each do |assignment|
+        list.append(assignment.user)
+      end
+    end
+
+    list.uniq
+
+  end
+
 
 end
