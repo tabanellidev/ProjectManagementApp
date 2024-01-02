@@ -11,25 +11,62 @@ I componenti principali comprendono
 - **Task** - Divisibili in Compiti
 - **Compiti** - Assegnabili agli utenti
 - **Gestioni** - Indicano quali Utenti hanno potere di gestire determinati progetti
+- **Notifiche** - Inviate agli utenti quando avvengono determinati eventi
 
-![ER Diagram](https://github.com/tabanellidev/ProjectManagementApp/tree/main/ProjectManagementApp/app/assets/images/er_diagram.png)
+![ER Diagram](/ProjectManagementApp/app/assets/images/er_diagram.png)
 
 ### Ruoli
 Si dividono in
 - **Admin** - utente con il potere più alto, hanno controllo su ogni aspetto dell'applicazione
 - **Developer Senior** - hanno il potere principale di creare progetti e assegnare altri gestori
-- **Developer** - non hanno poteri particolari
+- **Developer** - non hanno poteri particolari, ma possono modificare lo stato di un compito indicando che l'hanno completato
 
 Inoltre, ogni ruolo può essere anche un Project Manager che conferisce il potere di controllare Task e Compiti assegnati ad un progetto
 
-[diagramma permessi]
+|            | List         | Create       | Read         | Update       | Delete       |
+| ------------ | ------------ | ------------ | ------------ | ------------ | ------------ |
+|  User  |  D | A  | D  |  A   | A  |
+|  Project | D  | SD  | D  | D*  |  A |
+|  Task | D  |  D* |  D | D*  | D* |
+|  Compiti |  D |  D* |  D |  D* | D*   |
+|  Gestioni |  D | SD*  |  D |  SD* | SD*  |
 
+Legenda
+- [D] - developer o superiore
+- [SD] - senior developer o superiore
+- [A] - admin
+- [D*] - developer con potere da project manager ristretto a tale progetto
+- [SD*] - senior developer con potere da project manager ristretto a tale progetto
 
 ## Gemme principali utilizzate
 - [Devise](https://github.com/heartcombo/devise) - Per la gestione e login degli utenti
 - [Whenever](https://github.com/javan/whenever) - Per la gestione di cronjob
 - [Noticed](https://github.com/excid3/noticed) - Per la gestione delle notifiche
 
+### Whenever
+La gemma Whenever viene utilizzata per modificare lo stato dei progetti / task / compiti.
+Tutti gli oggetti partono da uno status
+- Uncompleted
+
+In particolare i Compiti vengono modificati in
+- Completed
+
+Se l'utente assegnato ne dichiara il completamente prima della data di scadenza, altrimenti se l'oggetto
+è ancora Uncompleted quando passa la data di scadenza lo stato diventa
+- Expired
+
+L'utente ha ancora la possibilità di completare il Compito ma lo stato diventa
+- Delayed
+
+
+I task seguono lo stesso ragionamento, ma vengono completati automaticamente quando tutti i compiti in cui sono divisi vengono completati.
+Lo stesso per i progetti.
+
+Whenever permette di creare dei cronjob che esegueno le istruzioni presenti nel file
+```
+ProjectManagementApp/app/config/schedule.rb
+```
+Al cui interno è specificata anche la pianificazione
 
 ## Prerequisites
 
@@ -41,8 +78,7 @@ Mentre per utilizzare l'applicazione al di fuori del container è necessario
 
 ## Guida all'installazione
 
-Primo navigare nella cartella 
-
+Prima navigare nella cartella 
 
 ```
 cd .../ProjectManagementApp/
@@ -75,9 +111,23 @@ Se si desidera non utilizzare è container è necessario nagivare nella cartella
 cd .../ProjectManagementApp/ProjectManagementApp/
 ```
 
-E lanciare il comando 
+Lanciare il comando 
 ```
 bundle install
 ```
 
+Successivamente usare i comandi per attivare i cronjob 
+```
+bundle exec whenever
+whenever --update-crontab --set enviroment='development'
+```
+
+Usando il seguente comando è possibile verificare se i cronjob sono stati attivati correttamente 
+```
+crontab -l
+```
+
+
 ### License
+
+[MIT](/License.txt)
