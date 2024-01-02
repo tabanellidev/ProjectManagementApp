@@ -25,7 +25,7 @@ Rails.application.routes.draw do
 
   post 'users', to: "users#create"
 
-  devise_for :users
+  devise_for :users, skip: [:registrations]
   resources :users
 
 
