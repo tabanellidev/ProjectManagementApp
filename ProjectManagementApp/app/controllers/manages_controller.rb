@@ -15,11 +15,14 @@ class ManagesController < ApplicationController
   def edit
     @manage = Manage.find(params[:id])
 
-    @users = User.all
-
     if not Project.manager?(@manage.project, current_user)
       not_authorized
     end
+
+    #Per ricavare la lista di possibili gestori
+    @users = User.all
+
+    @possibleManagers = Manage.possibleManagers(@users,@manage.project)
 
   end
 
@@ -60,13 +63,14 @@ class ManagesController < ApplicationController
 
     @project = Project.find(project_params)
 
-    @users = User.all
-
-    @possibleManagers = Manage.possibleManagers(@users,@project)
-
     if not Project.manager?(@project, current_user)
       not_authorized
     end
+
+    #Per ricavare la lista di possibili gestori
+    @users = User.all
+
+    @possibleManagers = Manage.possibleManagers(@users,@project)
 
   end
 

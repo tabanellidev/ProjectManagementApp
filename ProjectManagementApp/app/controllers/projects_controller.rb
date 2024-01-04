@@ -68,6 +68,7 @@ class ProjectsController < ApplicationController
 
     if @project.save
 
+      #Un creatore di progetto ne diventa automaticamente gestore
       @manage = Manage.new(user_id: current_user.id, project_id: @project.id)
       @manage.save
 

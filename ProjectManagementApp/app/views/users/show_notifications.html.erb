@@ -1,0 +1,50 @@
+<br>
+<div class="container">
+  <div class="row">
+    <div class="col-md-7 align-self-center">
+      <h1> Lista di tutte le notifiche </h1>
+    </div>
+    <div class="col-md-5 align-self-center">
+      <div class="btn-toolbar">
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<br>
+<div class="container">
+  <div class="row">
+    <div class="col-md-11 ">
+        <table class="table table-striped table-hover table-bordered">
+          <thead>
+          <tr>
+              <th scope="col">#</th>
+              <th scope="col">Visualizzata </th>
+              <th scope="col">Relativo a</th>
+              <th scope="col">Titolo</th>
+              <th scope="col">Timestamp Ricevuta</th>
+              <th scope="col">Timestamp Lettura</th>
+
+          </tr>
+          </thead>
+          <% @notifications.each do |notification| %>
+          <tr>
+            <td  class="align-baseline"> <h6> <%= notification.id %> </h6> </td>
+            <td  class="align-baseline"> <h6> <%= notification.read? %> </h6> </td>
+            
+            <td  class="align-baseline"> <h6> <%= notification.to_notification.object %> </h6> </td>
+            <td  class="align-baseline"> <h6> <%= render "notifications/link_not", notification: notification %> </h6> </td>
+            <td  class="align-baseline"> <h6> <%= notification.created_at %> </h6> </td>
+            <td  class="align-baseline"> <h6> <%= notification.read_at %> </h6> </td>
+          </tr>
+        <% end %>
+      </table>
+    </div>
+    
+  </div>
+</div>
+
+
+
+<br>

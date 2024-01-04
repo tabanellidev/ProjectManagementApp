@@ -44,29 +44,23 @@
       <div class="card h-100">
         <div class="card-body ">
           <h4 class="card-title">Gestori</h4>
-          <% if !@project.users %>
-              <hr>
-              <div class="row">
-                  <div class="col-sm-7">
-                      <p class="text-muted mb-0"> Nessun gestore ancora assegnato </p>
-                  </div>
-              </div>
-              <% else %>
-              <% @project.users.each do |user| %>
-                <hr>
-                <div class="row">
-                    <div class="col-sm-1">
-                        <span class="mb-0 align-middle"> <%= user.id %></span>
-                    </div>
-                    <div class="col-sm-8">
-                        <span class="mb-0 align-middle"> <%= user.name %> <%= user.surname %> </span>
-                    </div>
-                    <div class="col-sm-3">
-                        <%= button_to "Info", user_path(user.id), method: :get, class: "btn btn-outline-primary"%>
-                    </div>
+          <div class="navbar-scroll">
+          <%= render "shared/not_found", object: @project.users, message: "Nessun gestore ancora assegnato" %>
+          <% @project.users.each do |user| %>
+            <hr>
+            <div class="row">
+                <div class="col-sm-1">
+                    <span class="mb-0 align-middle"> <%= user.id %></span>
                 </div>
-              <% end %>
+                <div class="col-sm-8">
+                    <span class="mb-0 align-middle"> <%= user.name %> <%= user.surname %> </span>
+                </div>
+                <div class="col-sm-3">
+                    <%= button_to "Info", user_path(user.id), method: :get, class: "btn btn-outline-primary"%>
+                </div>
+            </div>
           <% end %>
+          </div>
         </div>
       </div>
     </div>
@@ -136,9 +130,15 @@
 <div class="container">
   <div class="row">
     <div class="col-md-11 ">
-      <%= render "shared/group", 
-          group: @projectGroup,
-          type: "Project" %>
+      <div class="card h-100">
+        <div class="card-body ">
+          <h4 class="card-title"> Project Group</h4>
+          <%= render "shared/not_found", object: @projectGroup, message: "Nessun utente lavora al progetto" %>
+          <%= render "shared/group", 
+              group: @projectGroup,
+              type: "Project" %>
+        </div>
+      </div>
     </div>
   </div>
 </div>

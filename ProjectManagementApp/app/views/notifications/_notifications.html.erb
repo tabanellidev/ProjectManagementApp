@@ -20,8 +20,6 @@
 
         <%if !notification.unread?%>
 
-          
-
           Il <%= notification.to_notification.object %> <%= render "notifications/link_not", notification: notification %> 
               è <%= notification.to_notification.operation %> <br>
 

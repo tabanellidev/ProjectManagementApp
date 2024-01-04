@@ -1,5 +1,6 @@
 class ApplicationController < ActionController::Base
 
+  #Per accedere a tutte le funzioni è necessaria l'autenticazione
   before_action :authenticate_user!
 
   def admin?

@@ -25,7 +25,7 @@
       <div class="card mb-4">
         <div class="card-body ">
         <h4 class="card-title">Compiti in corso</h4>
-           <%= render "shared/assignments_ongoing", user: @user %>
+          <%= render "shared/assignments_ongoing", user: @user %>
         </div>
       </div>
       <div class="card ">
@@ -55,6 +55,7 @@
       <div class="card h-100">
         <div class="card-body">
         <h4 class="card-title">Task su cui ha lavorato</h4>
+            <%= render "shared/not_found", object: @workedTask, message: "Nessun task trovato" %>
             <% @workedTask.each do |task| %>
             <hr>
             <div class="row">
@@ -78,17 +79,15 @@
     <div class="col-md-4 ">
       <div class="card h-100">
         <div class="card-body">
-        <h4 class="card-title">Progetti gestiti</h4>
+        <h4 class="card-title">Progetti gestiti in passato</h4>
+            <%= render "shared/not_found", object: @projectManaged, message: "Nessun progetto gestito" %>
             <% @projectManaged.each do |project| %>
             <hr>
             <div class="row">
-                <div class="col-sm-2">
-                    <span class="mb-0 align-middle"> <%= project.id %></span>
-                </div>
                 <div class="col-sm-5">
                     <span class="mb-0 align-middle"> <%= project.title %> </span>
                 </div>
-                <div class="col-sm-3">
+                <div class="col-sm-4">
                     <span class="mb-0 align-middle"> <%= project.status %> </span>
                 </div>
                 <div class="col-sm-1">

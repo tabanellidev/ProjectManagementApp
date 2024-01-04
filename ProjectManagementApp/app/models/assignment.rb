@@ -15,8 +15,10 @@ class Assignment < ApplicationRecord
 
   has_noticed_notifications
 
+  #Gestione delle notifiche
   def self.assignment_notice(assignment,type)
 
+    #Per ogni tipo di notifica diversa ho possibili target diversi
     if type == 'Assigned'
       targets = assignment.user_id
 
@@ -92,6 +94,7 @@ class Assignment < ApplicationRecord
     ProjectNotification.with(assignment).deliver_later(User.find(targets))
   end
 
+  #Per validation
   def end_date_after_start_date
     return if expiration_date.blank? || start_date.blank?
 
@@ -99,8 +102,9 @@ class Assignment < ApplicationRecord
       errors.add(:expiration_date, "must be after the start date")
     end
 
- end
+  end
 
+  #Funzioni supporto per i cronjob
   def self.expired
 
     puts("inizio assignment")
@@ -123,12 +127,14 @@ class Assignment < ApplicationRecord
 
   end
 
+  #Controllo che un utente sia colui assegnato al compito o un admin
   def self.owner(assignment, user)
 
     (assignment.user.id == user.id || user.role == 'admin')
 
   end
 
+  #Cambiamento dello stato
   def self.complete(assignment)
 
     assignment.completion_date = Date.today
@@ -143,31 +149,12 @@ class Assignment < ApplicationRecord
 
     assignment.save
 
+    #Possibile cambiamento dello stato del task
     Task.complete(assignment.task)
 
   end
 
-  def self.set_expire(assignment)
-
-    assignment.status = "Expired"
-    assignment.save
-
-  end
-
-  def self.set_uncomplete(assignment)
-
-    assignment.status = "Uncompleted"
-    assignment.save
-
-  end
-
-  def self.set_delay(assignment)
-
-    assignment.status = "Delayed"
-    assignment.save
-
-  end
-
+  #Funzione di supporto per le notifiche
   def self.create_and_assign_notification(assignment)
     Assignment.assignment_notice(assignment,'Created')
 
@@ -176,7 +163,8 @@ class Assignment < ApplicationRecord
     end
   end
 
-  def self.deallocate_and_assign(assignment, old_id)
+  #Funzione di supporto per le notifiche
+  def self.deallocate_and_assign_notification(assignment, old_id)
 
     if old_id == assignment.user_id
       Assignment.assignment_notice(assignment, 'Edit')
@@ -200,12 +188,33 @@ class Assignment < ApplicationRecord
     assignment.user_id != 0
   end
 
-  #??
+  #Dato un assignment ricavo i manager del progetto di cui fa parte, in supporto alle notifiche
   def self.manager?(id, current_user)
 
     assignment = Assignment.find(id)
 
     Project.manager?(assignment.task.project, current_user)
+
+  end
+
+  def self.set_expire(assignment)
+
+    assignment.status = "Expired"
+    assignment.save
+
+  end
+
+  def self.set_uncomplete(assignment)
+
+    assignment.status = "Uncompleted"
+    assignment.save
+
+  end
+
+  def self.set_delay(assignment)
+
+    assignment.status = "Delayed"
+    assignment.save
 
   end
 

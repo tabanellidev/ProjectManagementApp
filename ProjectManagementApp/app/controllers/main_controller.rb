@@ -1,5 +1,6 @@
 class MainController < ApplicationController
 
+    #Per accedere alla pagina principale non è necessaria l'autenticazione
     skip_before_action :authenticate_user!, only: [:index]
 
     def index

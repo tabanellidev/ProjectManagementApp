@@ -15,11 +15,14 @@ class AssignmentsController < ApplicationController
 
   def edit
     @assignment = Assignment.find(params[:id])
-    @user_array = User.all.map { |user| [user.id.to_s + " - " + user.name + " " + user.surname, user.id] }
 
     if not Project.manager?(@assignment.task.project, current_user)
       not_authorized
     end
+
+    #Per scegliere un nuovo utente per l'assegnazione nella view
+    @user_array = User.all.map { |user| [user.id.to_s + " - " + user.name + " " + user.surname, user.id] }
+
 
   end
 
@@ -33,7 +36,7 @@ class AssignmentsController < ApplicationController
 
     else
       if @assignment.update(assignment_params)
-        Assignment.deallocate_and_assign(@assignment, @old_id)
+        Assignment.deallocate_and_assign_notification(@assignment, @old_id)
         redirect_to @assignment
       else
         render :edit, status: :unprocessable_entity
@@ -66,11 +69,12 @@ class AssignmentsController < ApplicationController
 
     @task = Task.find(task_params)
 
-    @user_array = User.all.map { |user| [user.id.to_s + " - " + user.name + " " + user.surname, user.id] }
-
     if not Project.manager?(@task.project, current_user)
       not_authorized
     end
+
+    #Per scegliere un nuovo utente per l'assegnazione nella view
+    @user_array = User.all.map { |user| [user.id.to_s + " - " + user.name + " " + user.surname, user.id] }
 
   end
 

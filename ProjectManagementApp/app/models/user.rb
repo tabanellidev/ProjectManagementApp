@@ -17,6 +17,7 @@ class User < ApplicationRecord
 
   has_many :notifications, as: :recipient
 
+  #Lista dei task su cui l'utente ha lavorato
   def self.workedTask(user)
 
     list = []
@@ -32,6 +33,7 @@ class User < ApplicationRecord
 
   end
 
+  #Lista dei progetti gestiti dall'utente in passato
   def self.projectManaged(user)
 
     list = []

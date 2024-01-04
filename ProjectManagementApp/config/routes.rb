@@ -18,6 +18,8 @@ Rails.application.routes.draw do
   get 'projects/:id/expire', to: "projects#expire" #per testing
   get 'projects/:id/delay', to: "projects#delay" #per testing
 
+  get 'users/:id/notifications', to: "users#show_notifications"
+
   resources :projects
   resources :tasks
   resources :assignments
@@ -29,18 +31,6 @@ Rails.application.routes.draw do
   resources :users
 
 
-
-  #Tasks
-  #get 'tasks/index', to: "task#index"
-  #get 'tasks/:id', to: "task#show"
-
-  #Projects
-  #get '/projects/index', to: "projects#index"
-  #get '/projects/new', to: "projects#new"
-  #get '/projects/:id', to: "projects#show"
-
-
-  get "home", to: "home#index"
 
   get "/", to: "main#index"
   # Defines the root path route ("/")

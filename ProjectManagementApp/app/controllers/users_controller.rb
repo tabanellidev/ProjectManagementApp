@@ -16,6 +16,13 @@ class UsersController < ApplicationController
 
   end
 
+  def show_notifications
+
+    @user = User.find(params[:id])
+
+    @notifications = @user.notifications.reverse
+
+  end
 
   def edit
     @user = User.find(params[:id])

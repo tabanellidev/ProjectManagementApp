@@ -26,7 +26,7 @@ Inoltre, ogni ruolo può essere anche un Project Manager che conferisce il poter
 |            | List         | Create       | Read         | Update       | Delete       |
 | ------------ | ------------ | ------------ | ------------ | ------------ | ------------ |
 |  User  |  D | A  | D  |  A   | A  |
-|  Project | D  | SD  | D  | D*  |  A |
+|  Project | D  | SD  | D  | SD*  |  A |
 |  Task | D  |  D* |  D | D*  | D* |
 |  Compiti |  D |  D* |  D |  D* | D*   |
 |  Gestioni |  D | SD*  |  D |  SD* | SD*  |
@@ -37,6 +37,10 @@ Legenda
 - [A] - admin
 - [D*] - developer con potere da project manager ristretto a tale progetto
 - [SD*] - senior developer con potere da project manager ristretto a tale progetto
+
+### Diagrammi 
+- [Use-Case Diagram](/ProjectManagementApp/app/assets/images/UseCase.png)
+- [Statechart](/ProjectManagementApp/app/assets/images/Statechart.png)
 
 ## Gemme principali utilizzate
 - [Devise](https://github.com/heartcombo/devise) - Per la gestione e login degli utenti

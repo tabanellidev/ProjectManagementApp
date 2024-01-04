@@ -17,8 +17,8 @@
   </div>
 </div>
 
-
 <br>
+
 <div class="container">
   <div class="row">
     <div class="col-md-7 ">
@@ -45,29 +45,23 @@
       <div class="card h-100">
         <div class="card-body ">
           <h4 class="card-title">Compiti</h4>
-          <% if !@task.assignments %>
-              <hr>
-              <div class="row">
-                  <div class="col-sm-7">
-                      <p class="text-muted mb-0"> Nessun compito </p>
-                  </div>
-              </div>
-              <% else %>
-              <% @task.assignments.each do |assignment| %>
-                <hr>
-                <div class="row">
-                    <div class="col-sm-1">
-                        <span class="mb-0 align-middle"> <%= assignment.id %></span>
-                    </div>
-                    <div class="col-sm-8">
-                        <span class="mb-0 align-middle"> <%= assignment.title %> </span>
-                    </div>
-                    <div class="col-sm-3">
-                        <%= button_to "Info", assignment_path(assignment.id), method: :get, class: "btn btn-outline-primary"%>
-                    </div>
+          <div class="navbar-scroll">
+            <%= render "shared/not_found", object: @task.assignments, message: "Nessun compito ancora assegnato" %>
+            <% @task.assignments.each do |assignment| %>
+            <hr>
+            <div class="row">
+                <div class="col-sm-1">
+                    <span class="mb-0 align-middle"> <%= assignment.id %></span>
                 </div>
-              <% end %>
-          <% end %>
+                <div class="col-sm-8">
+                    <span class="mb-0 align-middle"> <%= assignment.title %> </span>
+                </div>
+                <div class="col-sm-3">
+                    <%= button_to "Info", assignment_path(assignment.id), method: :get, class: "btn btn-outline-primary"%>
+                </div>
+            </div>
+            <% end %>
+          </div>
         </div>
       </div>
     </div>
@@ -78,9 +72,15 @@
 <div class="container">
   <div class="row">
     <div class="col-md-11 ">
-      <%= render "shared/group", 
-          group: @taskGroup,
-          type: "Task" %>
+      <div class="card h-100">
+        <div class="card-body ">
+          <h4 class="card-title"> Task Group</h4>
+          <%= render "shared/not_found", object: @taskGroup, message: "Nessun utente lavora sul task" %>
+          <%= render "shared/group", 
+              group: @taskGroup,
+              type: "Task" %>
+        </div>
+      </div>
     </div>
   </div>
 </div>

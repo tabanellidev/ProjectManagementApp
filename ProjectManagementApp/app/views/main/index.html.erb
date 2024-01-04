@@ -19,7 +19,14 @@
     <div class="col-md-4">
       <div class="card h-100 ">
         <div class="card-body">
-        <h4 class="card-title">Notifiche</h4>
+          <div class="row">
+                <div class="col-sm-9">
+                  <h4 class="card-title d-inline-block">Notifiche </h4>
+                </div>
+                <div class="col-sm-1">
+                  <%= button_to "+", { :controller => "users", :action => "show_notifications", id: current_user.id}, method: :get, class: "btn btn-outline-primary"%>
+                </div>
+            </div>
         <hr>
           <div class="scrollable" style="overflow-y: auto; max-height: 350px;">
             <%= turbo_frame_tag "notifications" do %>
