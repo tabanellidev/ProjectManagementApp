@@ -16,6 +16,8 @@ class TasksController < ApplicationController
     @task = Task.find(params[:id])
 
     @taskGroup = Task.taskGroup(@task)
+
+    @done = Task.done?(@task)
   end
 
   def edit
@@ -84,6 +86,23 @@ class TasksController < ApplicationController
         params[:project_id] = @task.project_id
         render :new, status: :unprocessable_entity
       end
+    end
+
+  end
+
+  def manual_complete
+    @task = Task.find(params[:id])
+
+    if not Project.manager?(@task.project, current_user)
+      not_authorized
+    else
+
+      if not Task.manual_complete(@task)
+        redirect_to controller: 'main', action: 'errors', id: 600
+      else
+        redirect_to @task
+      end
+
     end
 
   end

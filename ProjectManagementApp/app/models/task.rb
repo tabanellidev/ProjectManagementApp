@@ -89,15 +89,9 @@ class Task < ApplicationRecord
 
     puts("Completamento task")
 
-    task_completed = true
+    done = Task.done?(task)
 
-    task.assignments.each do |assignment|
-      if assignment.status == 'Uncompleted'
-        task_completed = false
-      end
-    end
-
-    if task_completed
+    if done
       if Date.today <= task.expiration_date
         task.status = 'Completed'
         Task.task_notice(task,'Completed')
@@ -107,7 +101,8 @@ class Task < ApplicationRecord
       end
       task.save
 
-      Project.complete(task.project)
+      #Per automatizzare i cambiamenti di tasto
+      #Project.complete(task.project)
 
     end
 
@@ -132,7 +127,43 @@ class Task < ApplicationRecord
       end
     end
 
-    puts("fine project")
+    puts("fine task")
+
+  end
+
+  def self.manual_complete(task)
+
+    done = Task.done?(task)
+
+    if done
+
+      task.completion_date = Date.today
+
+      if Date.today <= task.expiration_date
+        task.status = 'Completed'
+        Task.task_notice(task,'Completed')
+      else
+        task.status = 'Delayed'
+        Task.task_notice(task,'Delayed')
+      end
+      task.save
+    end
+
+    return done
+
+  end
+
+  def self.done?(task)
+
+    task_completed = true
+
+    task.assignments.each do |assignment|
+      if assignment.status == 'Uncompleted' or assignment.status == 'Expired'
+        task_completed = false
+      end
+    end
+
+    return task_completed
 
   end
 

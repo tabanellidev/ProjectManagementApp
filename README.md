@@ -52,7 +52,7 @@ La gemma Whenever viene utilizzata per modificare lo stato dei progetti / task /
 Tutti gli oggetti partono da uno status
 - Uncompleted
 
-In particolare i Compiti vengono modificati in
+In particolare i compiti vengono modificati in
 - Completed
 
 Se l'utente assegnato ne dichiara il completamente prima della data di scadenza, altrimenti se l'oggetto
@@ -63,8 +63,7 @@ L'utente ha ancora la possibilità di completare il Compito ma lo stato diventa
 - Delayed
 
 
-I task seguono lo stesso ragionamento, ma vengono completati automaticamente quando tutti i compiti in cui sono divisi vengono completati.
-Lo stesso per i progetti.
+I task seguono lo stesso ragionamento, ma Project Managers hanno l'opzione di completarli una volta che tutti i compiti al suo interno sono stati completati. Lo stesso per i progetti.
 
 Whenever permette di creare dei cronjob che esegueno le istruzioni presenti nel file
 ```
@@ -91,13 +90,19 @@ cd .../ProjectManagementApp/
 Successivamente utilizzare docker build
 
 ```
-docker build -t dockerfile .
+docker build -t pma:1.0 .
 ```
 
 Infine eseguire docker run mappando la porta 3000 al container
 
 ```
 docker run -d -p 3000:3000 pma:1.0
+```
+
+Mentre per attivare i cronjob legati alla gemma whenever è necessario lanciare il comando
+
+```
+docker exec [id] cron
 ```
 
 Per fermare / rieseguire il container
@@ -123,7 +128,7 @@ bundle install
 Successivamente usare i comandi per attivare i cronjob 
 ```
 bundle exec whenever
-whenever --update-crontab --set enviroment='development'
+whenever --update-crontab --set environment=development
 ```
 
 Usando il seguente comando è possibile verificare se i cronjob sono stati attivati correttamente 

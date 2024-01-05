@@ -17,6 +17,8 @@ class ProjectsController < ApplicationController
 
     @projectGroup = Project.projectGorup(@project)
 
+    @done = Project.done?(@project)
+
   end
 
   def edit
@@ -75,6 +77,23 @@ class ProjectsController < ApplicationController
       redirect_to @project
     else
       render :new, status: :unprocessable_entity
+    end
+
+  end
+
+  def manual_complete
+    @project = Project.find(params[:id])
+
+    if not Project.manager?(@project, current_user)
+      not_authorized
+    else
+
+      if not Project.manual_complete(@project)
+        redirect_to controller: 'main', action: 'errors', id: 601
+      else
+        redirect_to @project
+      end
+
     end
 
   end

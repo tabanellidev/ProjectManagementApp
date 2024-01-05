@@ -1,8 +1,14 @@
 <br>
 <div class="container">
   <div class="row">
-    <div class="col-md-7 align-self-center">
+    <div class="col-md-6 align-self-center">
       <h1> <%= @project.title %> </h1>
+    </div>
+    <div class="col-md-1 align-self-center">
+        <% if @done and @project.status != 'Completed' and @project.status != 'Delayed' and not @project.tasks.empty? %>
+            <%= button_to "Completa", { action: "manual_complete", id: @project.id }, 
+            method: :get, form: {data: { turbo_confirm: "Sei sicuro?" } }, class: "btn btn-outline-info"%>
+        <% end %>
     </div>
     <div class="col-md-5 align-self-center">
       <div class="btn-toolbar">
@@ -81,21 +87,27 @@
   <div class="row">
     <div class="col-md-11 ">
       <table class="table table-hover table-bordered  ">
+        <% @project.tasks.each do |task| %>
         <thead>
           <tr>
             <th scope="col">#</th>
             <th scope="col">Tipo</th>
             <th scope="col">Titolo</th>
+            <th scope="col">Inizio</th>
+            <th scope="col">Completamento</th>
+            <th scope="col">Scadenza</th>
             <th scope="col">Status</th>
             <th scope="col">Info</th>
           </tr>
         </thead>
-        <% @project.tasks.each do |task| %>
           <tr class="table-primary">
 
             <td  class="align-baseline"> <h5> <%= task.id %> </h5> </td>
             <td  class="align-baseline"> <h5> Task </h5> </td>
             <td  class="align-baseline"> <h5> <%= task.title %> </h5> </td>
+            <td  class="align-baseline"> <h5> <%= task.start_date %> </h5> </td>
+            <td  class="align-baseline"> <h5> <%= task.completion_date %> </h5> </td>
+            <td  class="align-baseline"> <h5> <%= task.expiration_date %> </h5> </td>
             <td  class="align-baseline"> <h5> <%= task.status %> </h5> </td>
             <td> <%= button_to "Info", task_path(task.id), method: :get, class: "btn btn-outline-primary"%> </td>
 
@@ -105,6 +117,9 @@
               <th scope="col">#</th>
               <th scope="col">Tipo</th>
               <th scope="col">Titolo</th>
+              <th scope="col">Lavoratore</th>
+              <th scope="col">Completamento</th>
+              <th scope="col">Scadenza</th>
               <th scope="col">Status</th>
               <th scope="col">Info</th>
             </tr>
@@ -115,6 +130,9 @@
               <td  class="align-baseline"> <%= assignment.id %> </td>
               <td  class="align-baseline"> Compito </td>
               <td  class="align-baseline"> <%= assignment.title %> </td>
+              <td  class="align-baseline"> <%= assignment.user.name %> <%= assignment.user.surname %></td>
+              <td  class="align-baseline"> <h5> <%= assignment.completion_date %> </h5> </td>
+              <td  class="align-baseline"> <h5> <%= assignment.expiration_date %> </h5> </td>
               <td  class="align-baseline"> <%= assignment.status %> </td>
               <td> <%= button_to "Info", assignment_path(assignment.id), method: :get, class: "btn btn-outline-primary"%> </td>
             </tr>

@@ -2,7 +2,7 @@ require 'test_helper'
 
   class BrowsingTest < ActionDispatch::IntegrationTest
 
-      test "Login and browse site" do
+      test "Login and Manual complete" do
 
         # login via https
         https!
@@ -35,8 +35,18 @@ require 'test_helper'
         get "/assignments/1/complete"
         assert_redirected_to assignment_path(id: 1)
 
-        assert_equal(Task.find(3).status, 'Completed')
-        assert_equal(Project.find(3).status, 'Completed')
+        assert_equal(Task.find(3).status, 'Uncompleted')
+
+        get "/projects/3/manual_complete"
+        assert_redirected_to '/errors?id=601'
+
+        get "/tasks/3/manual_complete"
+        assert_redirected_to task_path(id: 3)
+
+        assert_equal(Project.find(3).status, 'Uncompleted')
+
+        get "/projects/3/manual_complete"
+        assert_redirected_to project_path(id: 3)
 
       end
 

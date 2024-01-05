@@ -19,6 +19,14 @@
                 Elemento non trovato
             <% end %>
 
+            <% if @error == '600' %>
+                Non puoi completare il task: alcuni compiti sono incompleti 
+            <% end %>
+
+            <% if @error == '601' %>
+                Non puoi completare il progetto: alcuni task sono incompleti 
+            <% end %>
+
 
           </div>
         </div>

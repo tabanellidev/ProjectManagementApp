@@ -12,11 +12,13 @@ Rails.application.routes.draw do
   get 'tasks/:id/uncomplete', to: "tasks#uncomplete" #per testing
   get 'tasks/:id/expire', to: "tasks#expire" #per testing
   get 'tasks/:id/delay', to: "tasks#delay" #per testing
+  get 'tasks/:id/manual_complete', to: "tasks#manual_complete"
 
   get 'projects/:id/complete', to: "projects#complete" #per testing
   get 'projects/:id/uncomplete', to: "projects#uncomplete" #per testing
   get 'projects/:id/expire', to: "projects#expire" #per testing
   get 'projects/:id/delay', to: "projects#delay" #per testing
+  get 'projects/:id/manual_complete', to: "projects#manual_complete"
 
   get 'users/:id/notifications', to: "users#show_notifications"
 

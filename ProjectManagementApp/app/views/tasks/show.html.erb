@@ -1,8 +1,14 @@
 <br>
 <div class="container">
   <div class="row">
-    <div class="col-md-7 align-self-center">
+    <div class="col-md-6 align-self-center">
       <h1> <%= @task.title %> </h1>
+    </div>
+    <div class="col-md-1 align-self-center">
+        <% if @done and @task.status != 'Completed' and @task.status != 'Delayed' and not @task.assignments.empty? %>
+            <%= button_to "Completa", { action: "manual_complete", id: @task.id }, 
+            method: :get, form: {data: { turbo_confirm: "Sei sicuro?" } }, class: "btn btn-outline-info"%>
+        <% end %>
     </div>
     <div class="col-md-5 align-self-center">
       <div class="btn-toolbar">
@@ -16,7 +22,6 @@
     </div>
   </div>
 </div>
-
 <br>
 
 <div class="container">

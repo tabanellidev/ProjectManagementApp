@@ -19,13 +19,14 @@
 
 # Learn more: http://github.com/javan/whenever
 
-set :environment, ENV["development"]
-
 set :output, './log/cron.log'
+set :environment, 'development'
+ENV.each { |k, v| env(k, v) }
 
-every 1.minutes do
+every 1.day, :at => '1:00 am' do
+#every 1.minute  do
 
-  runner "puts 'Hello World'"
+  runner 'puts DateTime.now'
   runner "puts Rails.env"
   runner 'Assignment.expired'
   runner 'Task.expired'

@@ -123,7 +123,7 @@ class Assignment < ApplicationRecord
       end
     end
 
-    puts("fine asignment")
+    puts("fine assignment")
 
   end
 
@@ -149,8 +149,8 @@ class Assignment < ApplicationRecord
 
     assignment.save
 
-    #Possibile cambiamento dello stato del task
-    Task.complete(assignment.task)
+    #Per automatizzare i cambiamenti
+    #Task.complete(assignment.task)
 
   end
 

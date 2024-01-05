@@ -71,7 +71,7 @@ class Project < ApplicationRecord
     project_completed = true
 
     project.tasks do |task|
-      if task.status == 'Uncompleted'
+      if task.status == 'Uncompleted' ||  task.status == 'Expired'
         project_completed = false
       end
     end
@@ -110,6 +110,42 @@ class Project < ApplicationRecord
     end
 
     puts("fine project")
+
+  end
+
+  def self.manual_complete(project)
+
+    done = Project.done?(project)
+
+    if done
+
+      project.completion_date = Date.today
+
+      if Date.today <= project.expiration_date
+        project.status = 'Completed'
+        Project.project_notice(project,'Completed')
+      else
+        project.status = 'Delayed'
+        Project.project_notice(project,'Delayed')
+      end
+      project.save
+    end
+
+    return done
+
+  end
+
+  def self.done?(project)
+
+    project_completed = true
+
+    project.tasks.each do |task|
+      if task.status == 'Uncompleted' or task.status == 'Expired'
+        project_completed = false
+      end
+    end
+
+    return project_completed
 
   end
 

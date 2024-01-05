@@ -27,7 +27,7 @@ EXPOSE 3000
 #Start cronjob
 RUN bundle exec whenever 
 
-RUN whenever --update-crontab --set environment='development'
+RUN whenever --update-crontab --set environment=development
 
 RUN crontab -l
 
