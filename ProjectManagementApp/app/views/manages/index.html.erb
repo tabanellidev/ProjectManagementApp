@@ -24,9 +24,9 @@
           <tr>
 
               <td  class="align-baseline"> <h6> <%= manage.id %> </h6> </td>
+              <td  class="align-baseline"> <h6> <%= manage.user.name %> <%= manage.user.surname %> </h6> </td>
               <td  class="align-baseline"> <h6> <%= manage.project.title %> </h6> </td>
               <td  class="align-baseline"> <h6> <%= manage.project.status %> </h6> </td>
-              <td  class="align-baseline"> <h6> <%= manage.user.name %> <%= manage.user.surname %> </h6> </td>
               <td> <%= button_to "Info", {action: "show", id: manage.id}, method: :get, class: "btn btn-outline-primary" %> </td>
           
           </tr>

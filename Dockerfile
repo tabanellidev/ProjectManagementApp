@@ -12,7 +12,7 @@ RUN apt-get update && apt-get -y install cron
 ENV INSTALL_PATH /opt/app
 RUN mkdir -p $INSTALL_PATH
 
-# Install gems 17 - rimuove la cartella node modules e vendor perchè sono cartelle enormi che non vengono messe all'interno dell'immagine
+# Install gems
 WORKDIR $INSTALL_PATH
 COPY ProjectManagementApp/ .
 RUN rm -rf node_modules vendor

@@ -25,8 +25,8 @@ Inoltre, ogni ruolo può essere anche un Project Manager che conferisce il poter
 
 |            | List         | Create       | Read         | Update       | Delete       |
 | ------------ | ------------ | ------------ | ------------ | ------------ | ------------ |
-|  User  |  D | A  | D  |  A   | A  |
-|  Project | D  | SD  | D  | SD*  |  A |
+|  Utenti  |  D | A  | D  |  A   | A  |
+|  Progetti | D  | SD  | D  | D*  |  A |
 |  Task | D  |  D* |  D | D*  | D* |
 |  Compiti |  D |  D* |  D |  D* | D*   |
 |  Gestioni |  D | SD*  |  D |  SD* | SD*  |
@@ -37,6 +37,16 @@ Legenda
 - [A] - admin
 - [D*] - developer con potere da project manager ristretto a tale progetto
 - [SD*] - senior developer con potere da project manager ristretto a tale progetto
+
+### Ruoli per il testing
+E' possibile testare subito l'applicazione utilizzando dei ruoli presenti nel seed del database:
+|      Ruolo      | Email         | Password       |
+| ------------ | ------------ | ------------ | 
+|  Utente Admin  |  admin@example.com | adminadmin  | 
+|  Utente Senior Developer | developersnr@example.com  | developer  | 
+|  Utente Developer | developer@example.com  |  developer |
+
+
 
 ### Diagrammi 
 - [Use-Case Diagram](/ProjectManagementApp/app/assets/images/UseCase.png)
@@ -67,17 +77,18 @@ I task seguono lo stesso ragionamento, ma Project Managers hanno l'opzione di co
 
 Whenever permette di creare dei cronjob che esegueno le istruzioni presenti nel file
 ```
-ProjectManagementApp/app/config/schedule.rb
+ProjectManagementApp/config/schedule.rb
 ```
 Al cui interno è specificata anche la pianificazione
 
-## Prerequisites
+## Prerequisiti
 
-Per utilizzare al meglio l'applicazione dovrebbe essere già installato nel sistema
+Per utilizzare l'applicazione tramite container è necessario
 - Docker
 
 Mentre per utilizzare l'applicazione al di fuori del container è necessario
 - Bundler
+- Ruby
 
 ## Guida all'installazione
 

@@ -25,6 +25,8 @@ class Assignment < ApplicationRecord
       assignment = assignment.as_json
       assignment["type"] = "Assigned"
       assignment["object"] = "Assignment"
+
+      ProjectNotification.with(assignment).deliver_later(User.find(targets))
     end
     if type == 'Deallocated'
       targets = assignment.user_id
@@ -159,7 +161,9 @@ class Assignment < ApplicationRecord
     Assignment.assignment_notice(assignment,'Created')
 
     if Assignment.not_user_zero(assignment)
+
        Assignment.assignment_notice(assignment,'Assigned')
+
     end
   end
 

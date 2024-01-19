@@ -22,18 +22,18 @@ User.create([{
   surname: "Rossi"
 },
 {
-  email: 'giuseppeverdi@example.com',
-  password:"giuseppeverdi",
-  password_confirmation:"giuseppeverdi",
+  email: 'developersnr@example.com',
+  password:"developer",
+  password_confirmation:"developer",
   role: 1,
   name: "Giuseppe",
   surname: "Verdi"
 },
 {
-  email: 'lucabianchi@example.com',
-  password:"lucabianchi",
-  password_confirmation:"lucabianchi",
-  role: 1,
+  email: 'developer@example.com',
+  password:"developer",
+  password_confirmation:"developer",
+  role: 0,
   name: "Luca",
   surname: "Bianchi"
 },
@@ -41,7 +41,7 @@ User.create([{
   email: 'guglielmoblu@example.com',
   password:"guglielmoblu",
   password_confirmation:"guglielmoblu",
-  role: 0,
+  role: 1,
   name: "Guglielmo",
   surname: "Blu"
 },
