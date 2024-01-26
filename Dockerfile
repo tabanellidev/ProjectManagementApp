@@ -20,6 +20,8 @@ RUN gem install rails bundler
 RUN bundle install
 RUN yarn install
 
+
+RUN rails db:reset
 #RUN cd ProjectManagementApp
 
 EXPOSE 3000
